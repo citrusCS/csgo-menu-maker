@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="csgo-menu-maker",
-    version="0.1.1",
+    version="0.1.2",
     author="Citrus",
     author_email="address@example.com",
     description="Make cool-looking menus in CSGO consoles",
