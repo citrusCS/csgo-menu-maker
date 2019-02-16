@@ -3,56 +3,56 @@ from .. import Menu
 from .ConfigType import ConfigType
 
 
-@ConfigType("bot.addct")
+@ConfigType("bots.addct")
 class AddCT(Menu.FireableCmd):
     defaultName = "Bot Add CT"
     defaultDesc = "Add a bot to the Counter-Terrorist team."
     cmd = "bot_add_ct"
 
 
-@ConfigType("bot.addt")
+@ConfigType("bots.addt")
 class AddT(Menu.FireableCmd):
     defaultName = "Bot Add T"
     defaultDesc = "Add a bot to the Terrorist team."
     cmd = "bot_add_t"
 
 
-@ConfigType("bot.kick")
+@ConfigType("bots.kick")
 class Kick(Menu.FireableCmd):
     defaultName = "Bot Kick"
     defaultDesc = "Kick all bots."
     cmd = "bot_kick"
 
 
-@ConfigType("bot.kill")
+@ConfigType("bots.kill")
 class Kill(Menu.FireableCmd):
     defaultName = "Bot Kill"
     defaultDesc = "Kill all bots."
     cmd = "bot_kill"
 
 
-@ConfigType("bot.stop")
+@ConfigType("bots.stop")
 class Stop(Menu.ChoiceVarBinary):
     defaultName = "Bot Stop"
     defaultDesc = "Enable/disable all bot processing."
     var = "bot_stop"
 
 
-@ConfigType("bot.allweps")
+@ConfigType("bots.allweps")
 class AllWeps(Menu.FireableCmd):
     defaultName = "Bot Allow All Weapons"
     defaultDesc = "Allow bots to use all weapons."
     cmd = "bot_all_weapons"
 
 
-@ConfigType("bot.allowrogues")
+@ConfigType("bots.allowrogues")
 class AllowRogues(Menu.ChoiceVarBinary):
     defaultName = "Bot Allow Rogues"
     defaultDesc = "Allow bots to become 'rogue' randomly."
     var = "bot_allow_rogues"
 
 
-@ConfigType("bot.chatter")
+@ConfigType("bots.chatter")
 class Chatter(Menu.ChoiceVar):
     defaultName = "Bot Chatter Set"
     defaultDesc = "Configure bots' talking."
@@ -67,7 +67,7 @@ class Chatter(Menu.ChoiceVar):
         self.makeChoices()
 
 
-@ConfigType("bot.difficulty")
+@ConfigType("bots.difficulty")
 class Difficulty(Menu.Bar):
     defaultName = "Bot Difficulty Set"
     defaultDesc = "Set bots' difficulty."
@@ -82,21 +82,21 @@ class Difficulty(Menu.Bar):
         self.makeChoices()
 
 
-@ConfigType("bot.dontshoot")
+@ConfigType("bots.dontshoot")
 class DontShoot(Menu.ChoiceVarBinary):
     defaultName = "Bot Don't Shoot"
     defaultDesc = "Enable/Disable bots' shooting."
     var = "bot_dont_shoot"
 
 
-@ConfigType("bot.freeze")
+@ConfigType("bots.freeze")
 class Freeze(Menu.ChoiceVarBinary):
     defaultName = "Bot Freeze"
     defaultDesc = "Enable/disable bot freeze."
     var = "bot_freeze"
 
 
-@ConfigType("bot.quota")
+@ConfigType("bots.quota")
 class Quota(Menu.Bar):
     defaultName = "Bot Quota Set"
     defaultDesc = "Set the max amount of bots in a game."
@@ -112,14 +112,14 @@ class Quota(Menu.Bar):
         self.makeChoices()
 
 
-@ConfigType("bot.mimic")
+@ConfigType("bots.mimic")
 class Mimic(Menu.ChoiceVarBinary):
     defaultName = "Bot Mimic"
     defaultDesc = "Enable/disable bots mimicing you."
     var = "bot_mimic"
 
 
-@ConfigType("bot.zombie")
+@ConfigType("bots.zombie")
 class Zombie(Menu.ChoiceVarBinary):
     defaultName = "Bot Zombie"
     defaultDesc = "Enable/disable bot zombie (sicko) mode."
