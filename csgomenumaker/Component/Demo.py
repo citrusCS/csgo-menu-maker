@@ -1,58 +1,90 @@
-from .. import Command
-from .. import Menu
+from .. import command
+from .. import menu
+from ..param import *
 
-from .ConfigType import ConfigType
+from .component import *
 
+from . import generic
 
-@ConfigType("demo.record")
-class Record(Menu.SlotChooser):
-    defaultName = "Record Demo"
-    defaultDesc = "Record a demo to an available slot."
+name_space(
+    "demo",
+    name="Demo",
+    description="Demo recording, playback, and control."
+)
 
+@Component("record")
+class Record(menu.SlotChooser):
+    params = ParamObj(
+        Name("Record"),
+        Desc("Record a Demo."),
+        Number(
+            "slots",
+            min=1,
+            max=30,
+            default=10,
+            description="The number of slots to be made."
+        )
+    )
+    
     def __init__(self, parent, options):
-        Menu.SlotChooser.__init__(self, parent, options)
-        self.setVerb("Record to")
-        self.setSlots(self.optValue(options, "slots", 16))
-        self.makeChoices()
+        menu.SlotChooser.__init__(self, parent, options)
+        self.verb = "Record to"
+        self.slots = self.params["slots"]
+        self.make_choices()
 
-    def getCommand(self, slot):
-        cmd = Command.Primitive(
+    def get_command(self, slot):
+        cmd = command.Primitive(
             self,
             "record",
-            [self.root.nameSpace+"_%i.dem" % slot]
+            [self.root.name_space+"_%i.dem" % slot]
         )
         return cmd
 
-
-@ConfigType("demo.play")
-class Play(Menu.SlotChooser):
-    defaultName = "Play Demo"
-    defaultDesc = "Play the demo in a selected slot."
-
+@Component("play")
+class Play(menu.SlotChooser):
+    params = ParamObj(
+        Name("Play"),
+        Desc("Play a Demo."),
+        Number(
+            "slots",
+            min=1,
+            max=30,
+            default=10,
+            description="The number of slots to be made."
+        )
+    )
+    
     def __init__(self, parent, options):
-        Menu.SlotChooser.__init__(self, parent, options)
-        self.setVerb("Play from")
-        self.setSlots(self.optValue(options, "slots", 16))
-        self.makeChoices()
+        menu.SlotChooser.__init__(self, parent, options)
+        self.verb = "Play from"
+        self.slots = self.params["slots"]
+        self.make_choices()
 
-    def getCommand(self, slot):
-        cmd = Command.Primitive(
+    def get_command(self, slot):
+        cmd = command.Primitive(
             self,
             "playdemo",
-            [self.root.nameSpace+"_%i.dem" % slot]
+            [self.root.name_space+"_%i.dem" % slot]
         )
         return cmd
 
+@Component("stop")
+class Stop(generic.FireableCmd):
+    params = ParamObj(
+        Name("Stop"),
+        Desc("Stop playing a demo."),
+        Override("concmd", "stopdemo")
+    )
 
-@ConfigType("demo.stop")
-class Stop(Menu.FireableCmd):
-    defaultName = "Stop Demo"
-    defaultDesc = "Stop recording a demo."
-    cmd = "stop"
+@Component("ui")
+class UI(generic.FireableCmd):
+    params = ParamObj(
+        Name("UI"),
+        Desc("Open the demo UI."),
+        Override("concmd", "demoui")
+    )  
 
+# 2019/03/03: FINALLY DONE! This is the last file I wrote!
 
-@ConfigType("demo.ui")
-class UI(Menu.FireableCmd):
-    defaultName = "Open Demo UI"
-    defaultDesc = "Open the demo playback UI."
-    cmd = "demoui"
+name_space()
+    

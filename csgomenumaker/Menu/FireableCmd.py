@@ -1,12 +1,17 @@
-from .. import Command
+from .. import command
+from .. import param
 
-from .Menu import Menu
-from .Fireable import Fireable
+from .menu import Menu
+from .fireable import Fireable
 
 
 class FireableCmd(Fireable):
+    """
+    Subclass of Fireable that runs a command.Primitive instead of an arbitrary
+    command object.
+    """
     def __init__(self, parent, options):
         Fireable.__init__(self, parent, options)
-        self.setCommand(Command.Primitive(self, self.cmd, []))
-        self.setText(self.cmd)
-        self.makeChoices()
+    
+    def set_command(self, cmd):
+        Fireable.set_command(self, [cmd,])

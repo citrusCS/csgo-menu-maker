@@ -1,0 +1,115 @@
+Config: [OK]
+	Crosshair [OK]
+	Viewmodel [OK]
+	HUD [OK]
+	Autobuys [OK]
+	Combinations/Gamemodes [OK]
+Cheats
+	Enable [OK]
+	Noclip [OK]
+	Noclip speed [OK]
+	God [OK]
+    Gods [OK]
+	Buddha [OK]
+	Explode [OK]
+	GiveCurrentAmmo [OK]
+	Give weapon [OK]
+	Fog Enable [OK]
+	No Recoil [OK]
+	Timescale [OK]
+	Thirdperson [OK]
+	Grenade Trajectory [OK]
+	Draw HUD [OK]
+	Equip Parachute [OK]
+	Hurt Me [OK]
+	Gravity [OK]
+	Crosshair Recoil [OK]
+	Draw Viewmodel [OK]
+Debug
+	showpos
+	fps
+	net graph
+	entity report
+    Wireframe [CHEAT]
+	Show Events [CHEAT]
+	Visualize Traces [CHEAT]
+	Show Budget [CHEAT]
+	Skeleton Draw [CHEAT]
+	Debug Menu [CHEAT]
+	Lock PVS [CHEAT]
+	Draw VGUI Tree [CHEAT]
+	Show Sound [CHEAT]
+	Lag Compensation
+	Show Bullet Hits
+	Show Impacts
+Sound
+	Master Volume
+	Voice Volume
+	Menu volume
+	Round start volume
+	Round end volume
+	Objective volume
+	10s warning volume
+	Death camera volume
+	MVP volume
+	Danger Zone music volume
+	Reload DSP [CHEAT]
+	DSP Off [CHEAT]
+	Reload SND [CHEAT]
+	Gain [CHEAT]
+Bots
+	bot add ct
+	bot add t
+	bot kick
+	bot kill
+	bot kill t, ct
+	bot stop
+	bot all weps
+	bot allow rogues
+	bot chatter
+	bot difficulty
+	bot dont shoot
+	bot freeze
+	bot weapon type
+	bot quota (select, 0-32)
+	bot mimic
+	bot zombie
+	Bot ignore players
+	Bot join team
+	Random Buy
+	Bot Place [CHEAT]
+Multiplayer
+	Auto-Kick
+	Buy Anywhere
+	Drop Knives
+	Friendly Fire
+	C4 Enabled
+	Random Spawns
+	Restart Game
+	Scramble Teams
+	Swap Teams
+	Switch Teams
+    Force Win
+    Force Respawn
+	Team Name Preset
+	Team Logo Preset
+	Team Flag Preset
+	Match Stat Preset
+	Match Odds Slider
+	TK Punish
+	Start Warmup
+	Pause Warmup
+	End Warmup
+Server
+	Bunny Hop Enable [Compound] [CHEAT]
+    Surf Mode [Compound]
+	Coaching [CHEAT]
+	Dead Talk [CHEAT]
+	Fall Damage Scale [CHEAT]
+	Out of Ammo Indicator
+Demo
+	Record
+	Stop
+	Play
+	UI
+	

@@ -1,11 +1,12 @@
-from .ConfigType import ConfigType
-from .ConfigTypeMapping import CONFIG_TYPE_MAPPING as ConfigTypeMapping
-from .ConfigLoader import ConfigLoader
+from .component import Component
+from .component import type_mapping
 
-from . import Game
-from . import Sound
-from . import Debug
-from . import Cheats
-from . import Bots
-from . import Demo
-from . import Generic
+from . import bots
+from . import config
+from . import cheats
+from . import debug
+from . import demo
+from . import multiplayer
+from . import server
+from . import sound
+from . import generic

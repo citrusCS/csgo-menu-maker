@@ -1,127 +1,113 @@
+import copy
 import sys
 
-from .. import Command
+from .. import command
+from .. import misc
+from .. import param
 
 
-class Menu(Command.NavState.Vert):
+class Menu(command.navstate.Vert, misc.Loggable):
+    params = param.ParamObj(
+        param.Name("Generic Menu"),
+        param.Desc("Description Here")
+    )
+    
     def __init__(self, parent, options):
-        Command.NavState.Vert.__init__(self, parent)
-        if not hasattr(self, "isMenuRoot"):
-            self.isMenuRoot = False
+        command.navstate.Vert.__init__(self, parent)
         self.cls = "menu"
-        self.options = options
-        self.menuRoot = self
-        while not self.menuRoot.isMenuRoot:
-            self.menuRoot = self.menuRoot.parent
-        self.setSpecs()
 
-    def setSpecs(self):
-        if hasattr(self, "defaultName"):
-            self.setUIName(
-                self.optValue(
-                    self.options,
-                    "name",
-                    self.defaultName
-                )
-            )
-            self.setDesc(
-                self.optValue(
-                    self.options,
-                    "desc",
-                    self.defaultDesc
-                )
-            )
-
-    def compareType(self, t1, t2):
-        if t2 == int:
-            t2 = type(float())
-        if t1 == int:
-            t1 = type(float())
-        return t1 == t2
-
-    def optValue(self, obj, key, default=None):
-        keyPresent = False
-        if isinstance(obj, list):
-            keyPresent = key < len(obj)
+        # Figure out the root object. Could use a bit of optimization.
+        self.menu_root = self
+        if not hasattr(self, "is_menu_root"):
+            self.is_menu_root = False
+        while not self.menu_root.is_menu_root:
+            self.menu_root = self.menu_root.parent
+        
+        # Try to obtain the component's name early, for error logging.
+        if "name" in self.params.children:
+            self.ui_name = self.params.children["name"].kwargs["default"]
+        
+        # Merge+evaluate params. Then, set the name and description.
+        self.merge_params()
+        
+        if not self.root.example or self.is_menu_root:
+            self.options = options
         else:
-            keyPresent = key in obj
-        if keyPresent:
-            val = obj[key]
-            if self.compareType(type(val), type(default)):
-                return obj[key]
+            self.options = self.params.get_example_full()
+        
+        self.params.evaluate(self.options)
+        self.ui_name = self.params["name"]
+        self.desc = self.params["desc"]
+    
+    def get_params(self, cur_type):
+        """
+        Return the params associated with this object.
+        
+        Called as merge_params walks up the class inheritance chain until it
+        hits Menu. This function is overrideable, but is a bit of a pain.
+        """
+        # Since we're using an attribute from a type object, we must copy as
+        # Param retains certain state. Could use optimzation in Param so that
+        # it can evaluate multiple times.
+        newpars = copy.deepcopy(cur_type.params)
+        newpars.register(self)
+        return (newpars, cur_type.__base__)
+    
+    def merge_params(self):
+        """
+        Merge down type params, starting from the most child-like class.
+        
+        This is done by walking up the class hierarchy and merging at each
+        step.
+        """
+        # Overwrite self.params temporarily
+        self.params = param.ParamObj()
+        self.params.register(self)
+        
+        # cur_type holds the currently inspected type, that is, where we are
+        # getting params from.
+        cur_type = type(self)
+        while cur_type is not Menu.__base__:
+            # If the type defines its own parameters, we use them. Otherwise,
+            # move on.
+            if hasattr(cur_type, "params"):
+                # gpfunc is cur_type's version of get_params. Remember, it is
+                # overrideable.
+                gp_func = cur_type.get_params
+                newpars, next_type = gp_func(self, cur_type)
+                self.params.merge(newpars)
+                cur_type = next_type
             else:
-                self.error(
-                    (
-                        "Mismatched type for key '%s' on object '%s', "
-                        + "expected '%s', got '%s'"
-                    ) %
-                    (
-                        key,
-                        obj,
-                        type(default),
-                        type(obj)
-                    )
-                )
-        else:
-            if default is not None:
-                return default
-            else:
-                self.error("Expected key '%s' in object '%s'" % (key, obj))
+                cur_type = cur_type.__base__
 
-    def optTypeKey(self, obj, key, typeTemplate):
-        if key in obj:
-            if not self.compareType(type(obj[key]), type(typeTemplate)):
-                self.error(
-                    "Mismatched type for key '%s' on object '%s', "
-                    + "expected '%s', got '%s'" %
-                    (
-                        key,
-                        obj,
-                        type(typeTemplate),
-                        type(obj)
-                    )
-                )
-        else:
-            self.error("Expected key '%s' in object '%s'" % (key, obj))
+    # def eval_params(self):
+        # "
+        # self.params.evaluate(self.options)
 
-    def optType(self, obj, typeTemplate):
-        if type(obj) != type(typeTemplate):
-            self.error(
-                "Mismatched type for object '%s', "
-                + "expected '%s', got '%s'" %
-                (
-                    obj,
-                    type(typeTemplate),
-                    type(obj)
-                )
-            )
+    # def set_specs(self):
+        # self.setUIName(self.params["name"])
+        # self.setDesc(self.params["desc"])
 
-    def optLenZero(self, obj):
-        if len(obj) == 0:
-            self.error("Not enough elements in object '%s', (need >0)" % obj)
-
-    def optLenZeroName(self, objn, obj):
-        if len(obj) == 0:
-            self.error("Not enough elements in object '%s', (need >0)" % objn)
-
-    def makeCmd(self, cmd, value):
+    def make_cmd(self, cmd, value):
+        """
+        Convenience function to make a concmd/convar statement out of a command
+        (or convar) and a value (which can be int, float, or str).
+        
+        Returns a command.Primitive.
+        """
         if isinstance(value, int):
-            return Command.Primitive(self, cmd, "%i" % value)
+            return command.Primitive(self, cmd, "%i" % value)
         elif isinstance(value, float):
-            return Command.Primitive(self, cmd, "%f" % value)
+            return command.Primitive(self, cmd, "%f" % value)
         elif isinstance(value, str):
-            return Command.Primitive(self, cmd, "%s" % value)
+            return command.Primitive(self, cmd, "%s" % value)
 
-    def makeCmdList(self, cmdList):
-        comp = Command.Compound(self)
-        for cmd in cmdList:
-            self.optType(cmd, str())
-            spl = cmd.split(" ")
-            self.optLenZero(spl)
-            concmd, ag = (spl[0], spl[1:])
-            Command.Primitive(comp, concmd, ag)
-        return comp
-
-    def error(self, s):
-        print("%s:\n\t\x1b[31mError: %s\x1b[0m" % (self.getErrorName(), s))
-        sys.exit(1)
+    # def make_cmd_list(self, cmdList):
+        # comp = command.Compound(self)
+        # for cmd in cmdList:
+            # self.optType(cmd, str())
+            # spl = cmd.split(" ")
+            # self.optLenZero(spl)
+            # concmd, ag = (spl[0], spl[1:])
+            # command.Primitive(comp, concmd, ag)
+        # return comp

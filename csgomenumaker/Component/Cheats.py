@@ -1,138 +1,261 @@
-from .. import Command
-from .. import Menu
+from .. import menu
+from ..param import *
 
-from .ConfigType import ConfigType
+from .component import *
 
+from . import generic
 
-@ConfigType("cheats.enable")
-class Enable(Menu.ChoiceVarBinary):
-    defaultName = "Cheats Enable"
-    defaultDesc = "Enable/disable cheats."
-    var = "sv_cheats"
+name_space(
+    "cheats",
+    name="Cheats",
+    description=
+        "Cheats and cheat options, such as noclip, sv_cheats, god, and others."
+)
 
+@Component("enable")
+class Enable(generic.ChoiceVarBinary):
+    params = ParamObj(
+        Name("Server Cheats"),
+        Desc("Toggle sv_cheats between 0 and 1."),
+        Override("convar", "sv_cheats"),
+        flags=["cheat"]
+    )
 
-@ConfigType("cheats.noclip")
-class NoclipEnable(Menu.ChoiceVarBinary):
-    defaultName = "Noclip Enable"
-    defaultDesc = "Enable/disable noclip."
-    var = "noclip"
+@Component("noclip")
+class Noclip(generic.ChoiceVarBinary):
+    params = ParamObj(
+        Name("Noclip"),
+        Desc("Toggle physics clipping."),
+        Override("convar", "noclip"),
+        flags=["cheat"]
+    )
 
+@Component("noclip.speed", "noclip_speed")
+class NoclipSpeed(generic.Bar):
+    params = ParamObj(
+        Name("Noclip Speed"),
+        Desc("Change physics clipping speed."),
+        Override("min", 0),
+        Override("max", 20),
+        Override("steps", 20),
+        Override("convar", "sv_noclipspeed"),
+        Override("style", "int"),
+        Override("default", 5),
+        flags=["cheat"]
+    )
 
-@ConfigType("cheats.god")
-class GodToggle(Menu.FireableCmd):
-    defaultName = "Godmode Enable"
-    defaultDesc = "Toggle godmode."
-    cmd = "god"
+@Component("god")
+class God(generic.FireableCmd):
+    params = ParamObj(
+        Name("God Mode"),
+        Desc("Enable/disable player godmode."),
+        Override("concmd", "god"),
+        flags=["cheat", "needs_fireable"]
+    )
 
+@Component("gods", "teamgod", "team_god")
+class Gods(generic.FireableCmd):
+    params = ParamObj(
+        Name("Gods Mode"),
+        Desc("Enable/disable godmode for all players."),
+        Override("concmd", "god"),
+        flags=["cheat", "needs_fireable"]
+    )
 
-@ConfigType("cheats.buddha")
-class BuddhaEnable(Menu.ChoiceVarBinary):
-    defaultName = "Buddha Enable"
-    defaultDesc = "Enable/disable buddha mode."
-    var = "buddha"
+@Component("buddha")
+class Buddha(generic.FireableCmd):
+    params = ParamObj(
+        Name("Buddha Mode"),
+        Desc("Enable/disable buddha mode for all players."),
+        Override("concmd", "buddha"),
+        flags=["cheat", "needs_fireable"]
+    )
 
+@Component("explode")
+class Explode(generic.FireableCmd):
+    params = ParamObj(
+        Name("Explode"),
+        Desc("Explode yourself."),
+        Override("concmd", "explode"),
+        flags=["cheat"]
+    )
 
-@ConfigType("cheats.notarget")
-class NotargetEnable(Menu.ChoiceVarBinary):
-    defaultName = "NoTarget Enable"
-    defaultDesc = "Enable/disable notarget mode."
-    var = "notarget"
+@Component("giveammo", "give_ammo", "givecurrentammo", "give_current_ammo")
+class GiveAmmo(generic.FireableCmd):
+    params = ParamObj(
+        Name("Give Ammo"),
+        Desc("Give yourself ammo for your currently held weapon."),
+        Override("concmd", "givecurrentammo"),
+        flags=["cheat"]
+    )
 
-
-@ConfigType("cheats.givecurrentammo")
-class GiveCurrentAmmo(Menu.FireableCmd):
-    defaultName = "Give Current Ammo"
-    defaultDesc = "Give yourself ammo for the weapon in your main hand."
-    cmd = "givecurrentammo"
-
-
-@ConfigType("cheats.giveweapon")
-class GiveWeapon(Menu.Fireable):
-    defaultName = "Give Weapon"
-    defaultDesc = "Give yourself a weapon."
-
+@Component("giveweapon", "give_weapon")
+class GiveWeapon(menu.FireableCmd):
+    params = ParamObj(
+        Name("Give Weapon"),
+        Desc("Give yourself a weapon."),
+        String(
+            "weapon",
+            description="The weapon to be given."
+        ),
+        flags=["cheat"]
+    )
+    
     def __init__(self, parent, options):
-        Menu.Fireable.__init__(self, parent, options)
-        self.optTypeKey(options, "weapon", str())
-        self.setCommand(
-            Command.Primitive(
-                self,
-                "give",
-                [
-                    "weapon_"+self.options["weapon"]
-                ]
-            )
-        )
-        self.setText("give %s" % options["weapon"])
-        self.makeChoices()
+        menu.FireableCmd.__init__(self, parent, options)
+        t = "give weapon_"+self.params["weapon"]
+        self.set_command(t)
+        self.text = t
+        self.make_choices()
 
+@Component("fogenable", "fog_enable")
+class FogEnable(generic.ChoiceVarBinary):
+    params = ParamObj(
+        Name("Fog Enable"),
+        Desc("Toggle fog rendering."),
+        Override("convar", "fog_enable"),
+        flags=["cheat"]
+    )
 
-@ConfigType("cheats.fog")
-class FogEnable(Menu.ChoiceVarBinary):
-    defaultName = "Fog Enable"
-    defaultDesc = "Enable/disable fog."
-    var = "fog_enable"
-    default = 1
+@Component("recoilscale", "recoil_scale")
+class RecoilScale(generic.Bar):
+    params = ParamObj(
+        Name("Recoil Scale"),
+        Desc("Change recoil scale. 0 for no recoil."),
+        Override("min", 0),
+        Override("max", 10),
+        Override("steps", 20),
+        Override("convar", "weapon_recoil_scale"),
+        Override("style", "int"),
+        Override("default", 2),
+        flags=["cheat"]
+    )
 
+@Component("timescale", "time_scale")
+class TimeScale(generic.Bar):
+    params = ParamObj(
+        Name("Time Scale"),
+        Desc("Change the server's time scale. 0 does not make the game stop."),
+        Override("min", 0),
+        Override("max", 4),
+        Override("steps", 20),
+        Override("convar", "host_timescale"),
+        Override("style", "int"),
+        Override("default", 1),
+        flags=["cheat"]
+    )  
 
-@ConfigType("cheats.norecoil")
-class RecoilEnable(Menu.ChoiceVarBinary):
-    defaultName = "Recoil Enable"
-    defaultDesc = "Enable/disable recoil."
-    var = "weapon_accuracy_nospread"
+@Component("thirdperson", "third_person")
+class Thirdperson(generic.Choice):
+    params = ParamObj(
+        Name("Third Person"),
+        Desc("Toggle between third and first person."),
+        Override(
+            "choices",
+            [
+                {
+                    "name" : "firstperson",
+                    "commands" : [
+                        "firstperson"
+                    ]
+                },
+                {
+                    "name" : "thirdperson",
+                    "commands" : [
+                        "thirdperson"
+                    ]
+                }
+            ]
+        ),
+        flags=["cheat"]
+    )
 
+@Component("grenadetrajectory", "grenade_trajectory")
+class GrenadeTrajectory(generic.ChoiceVarBinary):
+    params = ParamObj(
+        Name("Grenade Trajectory"),
+        Desc("Toggle the rendering of grenade paths when they are thrown."),
+        Override("convar", "sv_grenade_trajectory"),
+        flags=["cheat"]
+    )
 
-@ConfigType("cheats.wireframe")
-class WireframeEnable(Menu.ChoiceVarBinary):
-    defaultName = "Wireframe Enable"
-    defaultDesc = "Enable/disable wireframe rendering."
-    var = "mat_wireframe"
+@Component("drawhud", "draw_hud")
+class DrawHUD(generic.ChoiceVarBinary):
+    params = ParamObj(
+        Name("Draw HUD"),
+        Desc("Toggle the rendering of the HUD."),
+        Override("convar", "cl_drawhud"),
+        Override("default", 1),
+        flags=["cheat"]
+    )
 
+@Component("parachute")
+class Parachute(generic.FireableCmd):
+    params = ParamObj(
+        Name("Equip Parachute"),
+        Desc("Equip a parachute from DZ maps."),
+        Override("concmd", "parachute"),
+        flags=["cheat"]
+    )
 
-@ConfigType("cheats.drawothermodels")
-class DOMEnable(Menu.ChoiceVarBinary):
-    defaultName = "Draw Other Models Enable"
-    defaultDesc = "Enable/disable rendering of models."
-    var = "r_drawothermodels"
-    default = 1
-
-
-@ConfigType("cheats.timescale")
-class Timescale(Menu.Bar):
-    defaultName = "Timescale Set"
-    defaultDesc = "Set the host timescale."
-
+@Component("hurtme", "hurt_me")
+class HurtMe(menu.FireableCmd):
+    params = ParamObj(
+        Name("Hurt Me"),
+        Desc("Hurt yourself for a set amount of damage."),
+        Number(
+            "damage",
+            int=True,
+            default=10,
+            description="The amount of damage that firing this should accrue."
+        ),
+        flags=["cheat"]
+    )
+    
     def __init__(self, parent, options):
-        Menu.Bar.__init__(self, parent, options)
-        self.setMin(0)
-        self.setMax(self.optValue(options, "max", 2.0))
-        self.setDefault(self.optValue(options, "default", 1.0))
-        self.setSteps(self.optValue(options, "steps", 20))
-        self.setVar("host_timescale")
-        self.makeChoices()
+        menu.FireableCmd.__init__(self, parent, options)
+        t = "hurtme %i" % self.params["damage"]
+        self.set_command(t)
+        self.text = t
+        self.make_choices()
 
+@Component("gravity")
+class Gravity(generic.Bar):
+    params = ParamObj(
+        Name("Gravity"),
+        Desc(
+            "Change the server's gravity scale, in units per second squared."
+        ),
+        Override("min", 0),
+        Override("max", 1600),
+        Override("steps", 16),
+        Override("convar", "sv_gravity"),
+        Override("style", "int"),
+        Override("default", 800),
+        flags=["cheat"]
+    )
 
-@ConfigType("cheats.thirdperson")
-class ThirdPerson(Menu.Choice):
-    defaultName = "Thirdperson Enable"
-    defaultDesc = "Enable/disable third person mode."
+@Component(
+    "crosshairrecoil",
+    "crosshair_recoil",
+    "xhairrecoil",
+    "xhair_recoil"
+)
+class CrosshairRecoil(generic.ChoiceVarBinary):
+    params = ParamObj(
+        Name("Crosshair Recoil"),
+        Desc("Toggle the showing of recoil/aimpunch by moving the crosshair."),
+        Override("convar", "cl_crosshair_recoil"),
+        flags=["cheat"]
+    )
 
-    def __init__(self, parent, options):
-        Menu.Choice.__init__(self, parent, options)
-        self.addChoice(
-            "firstperson",
-            Command.Primitive(
-                self,
-                "firstperson",
-                []
-            )
-        )
-        self.addChoice(
-            "thirdperson",
-            Command.Primitive(
-                self,
-                "thirdperson",
-                []
-            )
-        )
-        self.makeChoices()
+@Component("drawviewmodel", "draw_viewmodel")
+class DrawViewmodel(generic.ChoiceVarBinary):
+    params = ParamObj(
+        Name("Draw Viewmodel"),
+        Desc("Toggle the drawing of the player's viewmodel."),
+        Override("convar", "r_drawviewmodel"),
+        flags=["cheat"]
+    )
+
+name_space()

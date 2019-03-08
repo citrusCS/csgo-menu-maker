@@ -1,6 +1,6 @@
-from . import Command
-from . import Component
-from . import Menu
-from . import Misc
+from . import command
+from . import component
+from . import menu
+from . import misc
 
 name = "csgomenumaker"

@@ -1,71 +1,88 @@
-from ..Compound import Compound
-from ..Dialog import Dialog
-from ..Realias import Realias
+from ..compound import Compound
+from ..dialog import Dialog
+from ..placeholder import Placeholder
+from ..realias import Realias
 
-from .NavState import NavState
+from .navstate import NavState
 
 
 class Horz(NavState):
+    """
+    A horizontal state transitioner.
+    
+    Horz instances are toggled between when you press left or right in the UI.
+    """
     def __init__(self, parent):
         NavState.__init__(self, parent)
         self.cls = "nav-horz"
-        self.getAction("fire").setHook(Compound(self.getAction("fire")))
-        self.addAction("display")
-        self.dialog = Dialog(self.getAction("display"))
-        self.getAction("display").setHook(self.dialog)
-        self.textContents = ["", "", "", ""]
-        self.desc = ""
+        
+        # Setup actions
+        self.actions["fire"].hook = Compound(self.actions["fire"])
+        self.actions["display"] = Placeholder(self, self.root.globals["void"])
+        
+        # Setup dialog on the display action, so that whenever this needs to be
+        # displayed the dialog is shown
+        self.dialog = Dialog(self.actions["display"])
+        self.actions["display"].hook = self.dialog
+        
+        # text_contents holds the four lines shown in the dialog (typically, 2
+        # are used but some menus use 4)
+        self.text_contents = ["", "", "", ""]
+        
+        self.dummy = False
 
-    def makeReAliases(self):
-        self.dialog.genDialog()
-        ec1 = self.getAction("entry").getHook()
-        ec1 += self.getAction("display").getHook()
+    def make_realiases(self):
+        """
+        Bind all neighbor commands to this state's actions. This is where the
+        magic happens. I can't fully explain what is going on here.
+        """
+        # Make the dialog text
+        self.dialog.generate_dialog()
+        
+        # Store a quick reference to the entry action, for more concise usage.
+        entry_hook = self.actions["entry"].hook
+        entry_hook.children.append(self.actions["display"].hook)
+        
+        # Make re-alias commands for each neighbor, and bind them to the entry
+        # action hook.
         Realias(
-            ec1,
-            self.root.getGlobal("nav.up"),
-            self.getNeighbor("up").getAction("entry")
+            entry_hook,
+            self.root.globals["nav.up"],
+            self.neighbors["up"].actions["entry"]
         )
         Realias(
-            ec1,
-            self.root.getGlobal("nav.down"),
-            self.getNeighbor("down").getAction("entry")
+            entry_hook,
+            self.root.globals["nav.down"],
+            self.neighbors["down"].actions["entry"]
         )
         Realias(
-            ec1,
-            self.root.getGlobal("nav.left"),
-            self.getNeighbor("left").getAction("entry")
+            entry_hook,
+            self.root.globals["nav.left"],
+            self.neighbors["left"].actions["entry"]
         )
         Realias(
-            ec1,
-            self.root.getGlobal("nav.right"),
-            self.getNeighbor("right").getAction("entry")
+            entry_hook,
+            self.root.globals["nav.right"],
+            self.neighbors["right"].actions["entry"]
         )
         Realias(
-            ec1,
-            self.root.getGlobal("nav.fire"),
-            self.getAction("fire").getHook()
+            entry_hook,
+            self.root.globals["nav.fire"],
+            self.actions["fire"].hook
         )
         Realias(
-            ec1,
-            self.root.getGlobal("nav.back"),
-            self.getNeighbor("back").getAction("entry")
+            entry_hook,
+            self.root.globals["nav.back"],
+            self.neighbors["back"].actions["entry"]
         )
         Realias(
-            ec1,
-            self.parent.getAction("entry").getHook(),
-            self.getAction("entry")
+            entry_hook,
+            self.parent.actions["entry"].hook,
+            self.actions["entry"]
         )
         Realias(
-            ec1,
-            self.root.getGlobal("nav.enable").getHook(),
-            self.getAction("display")
+            entry_hook,
+            self.root.globals["nav.enable"].hook,
+            self.actions["display"]
         )
-        if self.getNeighbor("back") != self:
-            Realias(
-                ec1,
-                self.getNeighbor("back").getAction("fire").getHook(),
-                self.getAction("entry")
-            )
-
-    def setTextContent(self, line, text):
-        self.textContents[line] = text
+        

@@ -3,7 +3,7 @@
 import argparse
 import sys
 
-from . import Component
+from . import loader
 
 parser = argparse.ArgumentParser(
     prog="csgomenumaker",
@@ -16,4 +16,4 @@ parser.add_argument(
 
 args = parser.parse_args(sys.argv[1:])
 
-Component.ConfigLoader(args.file)
+loader.Loader(args.file)
