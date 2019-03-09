@@ -1,9 +1,11 @@
 from .. import misc
 
+
 class Emulator(misc.Loggable):
     """
     Console emulator. Used for testing.
     """
+
     def __init__(self):
         self.lastcmd = []
         self.commands = {}
@@ -61,7 +63,7 @@ class Emulator(misc.Loggable):
         if len(curcmd):
             cmds.append(curcmd)
         return cmds
-    
+
     def evaluate_cmds(self, cmds):
         """
         Evaluate a tokenized set of commands and arguments.
@@ -86,13 +88,12 @@ class Emulator(misc.Loggable):
                 f = None
                 try:
                     f = open(cmd[1], 'r')
-                except:
+                except IOError:
                     self.error("Couldn't open file %s!" % cmd[1])
                     return
-                l = f.readlines()
-                #print(l)
+                lines = f.readlines()
                 f.close()
-                for line in l:
+                for line in lines:
                     tok = self.tokenize_line(line)
                     self.evaluate_cmds(tok)
             elif cmd[0] == "bind":
@@ -106,7 +107,7 @@ class Emulator(misc.Loggable):
                 print("[UNBIND] %s" % cmd[1])
                 self.binds.pop(cmd[1], None)
             elif cmd[0] == "trigger" or cmd[0] == "t":
-                if self.cmd_args(cmd, (2,3)):
+                if self.cmd_args(cmd, (2, 3)):
                     return
                 amt = 1
                 if cmd[1] not in self.binds:
@@ -129,10 +130,10 @@ class Emulator(misc.Loggable):
                     print("[RUN] \"%s\"" % " ".join(cmd))
             if cmd[0] != "'":
                 self.lastcmd = cmds
-    
+
     def cmd_args(self, cmd, args):
         """
-        Check if arguments are in range, or equal to args, which can be a 
+        Check if arguments are in range, or equal to args, which can be a
         single number or a tuple range.
         """
         if isinstance(args, int):
@@ -162,16 +163,15 @@ class Emulator(misc.Loggable):
                     )
                 )
                 return 1
-    
+
     def repl(self):
         """
         Run an input loop.
         """
         while True:
             inp = input("\x1b[34m] ")
-            print("\x1b[0m",end="")
             tok = self.tokenize_line(inp)
             self.evaluate_cmds(tok)
-    
+
     def error(self, text):
         misc.Loggable.error(self, text, exit=False)

@@ -4,6 +4,7 @@ from ..misc import RANDOM_WORDS
 
 from .param import Param
 
+
 class String(Param):
     """
     A param type which only accepts a string.
@@ -11,6 +12,7 @@ class String(Param):
     - choices
         Only allow strings in this list.
     """
+
     def check(self, value):
         """
         Check the given value against the restrictions imposed by this class
@@ -22,14 +24,15 @@ class String(Param):
             self.type_error((str,), type(value))
         if "choices" in self.kwargs:
             if value not in self.kwargs["choices"]:
-                self.show_error("Value '%s' not in set of choices '%s'." %
+                self.show_error(
+                    "Value '%s' not in set of choices '%s'." %
                     (
                         value,
                         str(self.kwargs["choices"])
                     )
                 )
         return value
-    
+
     def get_example(self):
         """
         Get an example set of values for this object, taking into account
@@ -74,7 +77,7 @@ class String(Param):
                 )
             )
         return out
-    
+
     def get_example_full(self):
         """
         Get a single valid example value for this parameter.

@@ -9,21 +9,27 @@ from .horz import Horz
 class VertFolder(NavState):
     """
     A vertical state transitioner, that also holds recursive children.
-    
+
     VertFolder instances are toggled between by pressing Back/Fire in the UI.
     """
+
     def __init__(self, parent):
         NavState.__init__(self, parent)
         self.cls = "nav-vert-folder"
-        
-        # self.dummy is a navstatehorz which serves as the UI element and 
+
+        # self.dummy is a navstatehorz which serves as the UI element and
         # inward transition for this navstate.
         self.dummy = Horz(self)
         self.dummy.dummy = True
-        
+
         self.actions["fire"].hook = Compound(self.actions["fire"])
-        self.actions["fire_back"] = Placeholder(self.actions["fire"].hook, self.root.globals["void"])
-        self.actions["entry"].hook.children.append(self.dummy.actions["entry"].hook)
+        self.actions["fire_back"] = Placeholder(
+            self.actions["fire"].hook,
+            self.root.globals["void"]
+        )
+        self.actions["entry"].hook.children.append(
+            self.dummy.actions["entry"].hook
+        )
         self.dummy.actions["fire"].hook = self.actions["fire"]
 
     def join_children(self):
@@ -37,13 +43,14 @@ class VertFolder(NavState):
         self.dummy.neighbors["left"] = self.dummy
         self.dummy.neighbors["right"] = self.dummy
         self.dummy.neighbors["back"] = self.neighbors["back"]
-        
+
         if len(self.selections):
-            self.actions["fire_back"].hook = self.selections[0].actions["entry"]
-        
+            self.actions["fire_back"].hook = \
+                self.selections[0].actions["entry"]
+
         # Setup the fire action - i.e. setup enter button press.
         max = len(self.selections)
-        
+
         # Bind children selections to each other and self.
         for i, ch in enumerate(self.selections):
             ch.neighbors["up"] = self.selections[(i - 1) % max]
@@ -56,9 +63,6 @@ class VertFolder(NavState):
         Make all of the realiases on this instances' children. This function is
         called recursively.
         """
-        #if len(self.selections) == 0:
-        #    self.error("No selections present!")
-        
         self.dummy.make_realiases()
         for ch in self.selections:
             ch.make_realiases()

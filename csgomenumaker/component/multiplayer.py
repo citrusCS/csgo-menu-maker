@@ -7,10 +7,12 @@ from . import generic
 name_space(
     "multiplayer",
     name="Multiplayer",
-    description=
+    description=(
         "Multiplayer options pertaining to how the game is run, such as"
         " friendly fire, buy-anywhere, team managment, etc."
+    )
 )
+
 
 @Component("autokick", "auto_kick")
 class AutoKick(generic.ChoiceVarBinary):
@@ -20,6 +22,7 @@ class AutoKick(generic.ChoiceVarBinary):
         Override("convar", "mp_autokick")
     )
 
+
 @Component("buyanywhere", "buy_anywhere")
 class BuyAnywhere(generic.ChoiceVarBinary):
     params = ParamObj(
@@ -27,6 +30,7 @@ class BuyAnywhere(generic.ChoiceVarBinary):
         Desc("Toggle allowing players to buy weapons anywhere on the map."),
         Override("convar", "mp_buy_anywhere"),
     )
+
 
 @Component("dropknives", "drop_knives")
 class DropKnives(generic.ChoiceVarBinary):
@@ -36,6 +40,7 @@ class DropKnives(generic.ChoiceVarBinary):
         Override("convar", "mp_drop_knife_enable")
     )
 
+
 @Component("friendlyfire", "friendly_fire")
 class FriendlyFire(generic.ChoiceVarBinary):
     params = ParamObj(
@@ -43,6 +48,7 @@ class FriendlyFire(generic.ChoiceVarBinary):
         Desc("Toggle allowing friendly fire."),
         Override("convar", "mp_friendlyfire")
     )
+
 
 @Component("c4enabled", "c4_enabled", "c4enable", "c4_enable")
 class C4Enabled(generic.ChoiceVarBinary):
@@ -53,6 +59,7 @@ class C4Enabled(generic.ChoiceVarBinary):
         Override("default", 1)
     )
 
+
 @Component("randomspawns", "random_spawns", "randomspawn", "random_spawn")
 class RandomSpawns(generic.ChoiceVarBinary):
     params = ParamObj(
@@ -61,6 +68,7 @@ class RandomSpawns(generic.ChoiceVarBinary):
         Override("convar", "mp_randomspawn")
     )
 
+
 @Component("restartgame", "restart_game")
 class RestartGame(generic.FireableCmd):
     params = ParamObj(
@@ -68,6 +76,7 @@ class RestartGame(generic.FireableCmd):
         Desc("Trigger a game restart."),
         Override("concmd", "mp_restartgame")
     )
+
 
 @Component("forcewin", "force_win")
 class ForceWin(generic.FireableCmd):
@@ -78,6 +87,7 @@ class ForceWin(generic.FireableCmd):
         flags=["cheat"]
     )
 
+
 @Component("forcerespawn", "force_respawn")
 class ForceRespawn(generic.FireableCmd):
     params = ParamObj(
@@ -87,13 +97,16 @@ class ForceRespawn(generic.FireableCmd):
         flags=["cheat"]
     )
 
+
 name_space(
     "teams",
     name="Teams",
-    description=
+    description=(
         "Teams setup and team options, including display options like names,"
         " odds, and flags."
+    )
 )
+
 
 @Component("scramble", "scrambeleggs_without_moms_help")
 class ScrambleTeams(generic.FireableCmd):
@@ -103,6 +116,7 @@ class ScrambleTeams(generic.FireableCmd):
         Override("concmd", "mp_scrambleteams")
     )
 
+
 @Component("swap")
 class SwapTeams(generic.FireableCmd):
     params = ParamObj(
@@ -110,6 +124,7 @@ class SwapTeams(generic.FireableCmd):
         Desc("Swap the teams and trigger a game restart."),
         Override("concmd", "mp_swapteams")
     )
+
 
 @Component("switch")
 class SwitchTeams(generic.FireableCmd):
@@ -119,6 +134,7 @@ class SwitchTeams(generic.FireableCmd):
         Override("concmd", "mp_switchteams")
     )
 
+
 @Component("name1preset", "tname_1_preset")
 class TeamName1Preset(generic.ChoiceVar):
     params = ParamObj(
@@ -126,6 +142,7 @@ class TeamName1Preset(generic.ChoiceVar):
         Desc("Choose team 1 name presets."),
         Override("convar", "mp_teamname_1")
     )
+
 
 @Component("name2preset", "name_2_preset")
 class TeamName2Preset(generic.ChoiceVar):
@@ -135,6 +152,7 @@ class TeamName2Preset(generic.ChoiceVar):
         Override("convar", "mp_teamname_2")
     )
 
+
 @Component("logo1preset", "logo_1_preset")
 class Logo1Preset(generic.ChoiceVar):
     params = ParamObj(
@@ -142,7 +160,8 @@ class Logo1Preset(generic.ChoiceVar):
         Desc("Choose team 1 logo presets."),
         Override("convar", "mp_teamlogo_1")
     )
-        
+
+
 @Component("logo2preset", "logo_2_preset")
 class TeamLogo2Preset(generic.ChoiceVar):
     params = ParamObj(
@@ -150,6 +169,7 @@ class TeamLogo2Preset(generic.ChoiceVar):
         Desc("Choose team 2 logo presets."),
         Override("convar", "mp_teamlogo_2")
     )
+
 
 @Component("flag1preset", "flag_1_preset")
 class TeamFlag1Preset(generic.ChoiceVar):
@@ -159,6 +179,7 @@ class TeamFlag1Preset(generic.ChoiceVar):
         Override("convar", "mp_teamflag_1")
     )
 
+
 @Component("flag2preset", "flag_2_preset")
 class TeamFlag2Preset(generic.ChoiceVar):
     params = ParamObj(
@@ -166,6 +187,7 @@ class TeamFlag2Preset(generic.ChoiceVar):
         Desc("Choose team 2 flag presets."),
         Override("convar", "mp_teamflag_2")
     )
+
 
 @Component("matchstat1preset", "matchstat_1_preset")
 class MatchStat1Preset(generic.ChoiceVar):
@@ -175,6 +197,7 @@ class MatchStat1Preset(generic.ChoiceVar):
         Override("convar", "mp_teammatchstat_1")
     )
 
+
 @Component("matchstat2preset", "matchstat_2_preset")
 class TeamMatchStat2Preset(generic.ChoiceVar):
     params = ParamObj(
@@ -182,6 +205,7 @@ class TeamMatchStat2Preset(generic.ChoiceVar):
         Desc("Choose team 2 matchstat presets."),
         Override("convar", "mp_teammatchstat_2")
     )
+
 
 @Component("odds", "matchodds", "match_odds")
 class TeamMatchOdds(generic.Bar):
@@ -198,7 +222,9 @@ class TeamMatchOdds(generic.Bar):
         Override("default", 50)
     )
 
+
 name_space()
+
 
 @Component("tkpunish", "tk_punish")
 class TKPunish(generic.ChoiceVarBinary):
@@ -208,11 +234,13 @@ class TKPunish(generic.ChoiceVarBinary):
         Override("convar", "mp_tkpunish")
     )
 
+
 name_space(
     "warmup",
     name="Warmup",
     description="Warmup controls."
 )
+
 
 @Component("start")
 class StartWarmup(generic.FireableCmd):
@@ -222,6 +250,7 @@ class StartWarmup(generic.FireableCmd):
         Override("concmd", "mp_warmup_start")
     )
 
+
 @Component("pause")
 class PauseWarmup(generic.FireableCmd):
     params = ParamObj(
@@ -229,6 +258,7 @@ class PauseWarmup(generic.FireableCmd):
         Desc("Pause the warmup session."),
         Override("concmd", "mp_warmup_pause")
     )
+
 
 @Component("end")
 class EndWarmup(generic.FireableCmd):
@@ -238,6 +268,8 @@ class EndWarmup(generic.FireableCmd):
         Override("concmd", "mp_warmup_end")
     )
 
+
 name_space()
+
 
 name_space()

@@ -8,9 +8,11 @@ from . import generic
 name_space(
     "cheats",
     name="Cheats",
-    description=
+    description=(
         "Cheats and cheat options, such as noclip, sv_cheats, god, and others."
+    )
 )
+
 
 @Component("enable")
 class Enable(generic.ChoiceVarBinary):
@@ -21,6 +23,7 @@ class Enable(generic.ChoiceVarBinary):
         flags=["cheat"]
     )
 
+
 @Component("noclip")
 class Noclip(generic.ChoiceVarBinary):
     params = ParamObj(
@@ -29,6 +32,7 @@ class Noclip(generic.ChoiceVarBinary):
         Override("convar", "noclip"),
         flags=["cheat"]
     )
+
 
 @Component("noclip.speed", "noclip_speed")
 class NoclipSpeed(generic.Bar):
@@ -44,6 +48,7 @@ class NoclipSpeed(generic.Bar):
         flags=["cheat"]
     )
 
+
 @Component("god")
 class God(generic.FireableCmd):
     params = ParamObj(
@@ -52,6 +57,7 @@ class God(generic.FireableCmd):
         Override("concmd", "god"),
         flags=["cheat", "needs_fireable"]
     )
+
 
 @Component("gods", "teamgod", "team_god")
 class Gods(generic.FireableCmd):
@@ -62,6 +68,7 @@ class Gods(generic.FireableCmd):
         flags=["cheat", "needs_fireable"]
     )
 
+
 @Component("buddha")
 class Buddha(generic.FireableCmd):
     params = ParamObj(
@@ -70,6 +77,7 @@ class Buddha(generic.FireableCmd):
         Override("concmd", "buddha"),
         flags=["cheat", "needs_fireable"]
     )
+
 
 @Component("explode")
 class Explode(generic.FireableCmd):
@@ -80,6 +88,7 @@ class Explode(generic.FireableCmd):
         flags=["cheat"]
     )
 
+
 @Component("giveammo", "give_ammo", "givecurrentammo", "give_current_ammo")
 class GiveAmmo(generic.FireableCmd):
     params = ParamObj(
@@ -88,6 +97,7 @@ class GiveAmmo(generic.FireableCmd):
         Override("concmd", "givecurrentammo"),
         flags=["cheat"]
     )
+
 
 @Component("giveweapon", "give_weapon")
 class GiveWeapon(menu.FireableCmd):
@@ -100,13 +110,14 @@ class GiveWeapon(menu.FireableCmd):
         ),
         flags=["cheat"]
     )
-    
+
     def __init__(self, parent, options):
         menu.FireableCmd.__init__(self, parent, options)
         t = "give weapon_"+self.params["weapon"]
         self.set_command(t)
         self.text = t
         self.make_choices()
+
 
 @Component("fogenable", "fog_enable")
 class FogEnable(generic.ChoiceVarBinary):
@@ -116,6 +127,7 @@ class FogEnable(generic.ChoiceVarBinary):
         Override("convar", "fog_enable"),
         flags=["cheat"]
     )
+
 
 @Component("recoilscale", "recoil_scale")
 class RecoilScale(generic.Bar):
@@ -131,6 +143,7 @@ class RecoilScale(generic.Bar):
         flags=["cheat"]
     )
 
+
 @Component("timescale", "time_scale")
 class TimeScale(generic.Bar):
     params = ParamObj(
@@ -143,7 +156,8 @@ class TimeScale(generic.Bar):
         Override("style", "int"),
         Override("default", 1),
         flags=["cheat"]
-    )  
+    )
+
 
 @Component("thirdperson", "third_person")
 class Thirdperson(generic.Choice):
@@ -154,14 +168,14 @@ class Thirdperson(generic.Choice):
             "choices",
             [
                 {
-                    "name" : "firstperson",
-                    "commands" : [
+                    "name": "firstperson",
+                    "commands": [
                         "firstperson"
                     ]
                 },
                 {
-                    "name" : "thirdperson",
-                    "commands" : [
+                    "name": "thirdperson",
+                    "commands": [
                         "thirdperson"
                     ]
                 }
@@ -169,6 +183,7 @@ class Thirdperson(generic.Choice):
         ),
         flags=["cheat"]
     )
+
 
 @Component("grenadetrajectory", "grenade_trajectory")
 class GrenadeTrajectory(generic.ChoiceVarBinary):
@@ -178,6 +193,7 @@ class GrenadeTrajectory(generic.ChoiceVarBinary):
         Override("convar", "sv_grenade_trajectory"),
         flags=["cheat"]
     )
+
 
 @Component("drawhud", "draw_hud")
 class DrawHUD(generic.ChoiceVarBinary):
@@ -189,6 +205,7 @@ class DrawHUD(generic.ChoiceVarBinary):
         flags=["cheat"]
     )
 
+
 @Component("parachute")
 class Parachute(generic.FireableCmd):
     params = ParamObj(
@@ -197,6 +214,7 @@ class Parachute(generic.FireableCmd):
         Override("concmd", "parachute"),
         flags=["cheat"]
     )
+
 
 @Component("hurtme", "hurt_me")
 class HurtMe(menu.FireableCmd):
@@ -211,13 +229,14 @@ class HurtMe(menu.FireableCmd):
         ),
         flags=["cheat"]
     )
-    
+
     def __init__(self, parent, options):
         menu.FireableCmd.__init__(self, parent, options)
         t = "hurtme %i" % self.params["damage"]
         self.set_command(t)
         self.text = t
         self.make_choices()
+
 
 @Component("gravity")
 class Gravity(generic.Bar):
@@ -235,6 +254,7 @@ class Gravity(generic.Bar):
         flags=["cheat"]
     )
 
+
 @Component(
     "crosshairrecoil",
     "crosshair_recoil",
@@ -249,6 +269,7 @@ class CrosshairRecoil(generic.ChoiceVarBinary):
         flags=["cheat"]
     )
 
+
 @Component("drawviewmodel", "draw_viewmodel")
 class DrawViewmodel(generic.ChoiceVarBinary):
     params = ParamObj(
@@ -257,5 +278,6 @@ class DrawViewmodel(generic.ChoiceVarBinary):
         Override("convar", "r_drawviewmodel"),
         flags=["cheat"]
     )
+
 
 name_space()

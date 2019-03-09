@@ -6,6 +6,7 @@ from .. import param
 
 from .menu import Menu
 
+
 @component.Component("folder")
 class Folder(Menu, command.navstate.VertFolder):
     """
@@ -19,22 +20,24 @@ class Folder(Menu, command.navstate.VertFolder):
             "tree",
             param.String(
                 "type",
-                description=
-                    "The type (or function) of the child component.",
+                description=(
+                    "The type (or function) of the child component."
+                ),
                 default="..."
             ),
-            description=
+            description=(
                 "The child components of this folder or hierarchy."
+            )
         )
     )
-    
+
     def __init__(self, parent, options):
         Menu.__init__(self, parent, options)
         command.navstate.VertFolder.__init__(self, parent)
         self.ui_name = self.params["name"]
         self.desc = self.params["desc"]
         self.cls = "menu-folder"
-        
+
         # Take everything in the "tree" param and make it into a menu!
         for ch in self.params["tree"]:
             self.instantiate(ch)
@@ -46,7 +49,13 @@ class Folder(Menu, command.navstate.VertFolder):
         if obj["type"] not in self.root.class_mapping:
             if obj["type"] != "...":
                 # There isn't a class of that name. ERROR!
-                self.error("Unknown type '%s' in object '%s'" % (obj["type"], obj))
+                self.error(
+                    "Unknown type '%s' in object '%s'" %
+                    (
+                        obj["type"],
+                        obj
+                    )
+                )
             else:
                 return
         else:
@@ -54,7 +63,7 @@ class Folder(Menu, command.navstate.VertFolder):
             if isinstance(otype, str):
                 otype = self.root.class_mapping[otype]
         self.selections.append(otype(self, obj))
-    
+
     def make_dialog(self):
         """
         Generate the UI text for this object.
@@ -106,6 +115,6 @@ class Folder(Menu, command.navstate.VertFolder):
 
     def join_children(self):
         command.navstate.VertFolder.join_children(self)
-        
+
     def make_realiases(self):
         command.navstate.VertFolder.make_realiases(self)

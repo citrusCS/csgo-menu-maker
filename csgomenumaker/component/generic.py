@@ -8,6 +8,7 @@ from .component import *
 
 name_space("generic")
 
+
 @Component("choice")
 class Choice(menu.Choice):
     params = ParamObj(
@@ -32,10 +33,12 @@ class Choice(menu.Choice):
                 ]
             ),
             flexkey=None,
-            description=
+            description=(
                 "The different choices that make up this component's contents."
+            )
         )
     )
+
     def __init__(self, parent, options):
         menu.Choice.__init__(self, parent, options)
         for ch in self.params["choices"]:
@@ -61,6 +64,7 @@ class ChoiceVar(menu.ChoiceVar):
             seqtypes=str
         )
     )
+
     def __init__(self, parent, options):
         menu.ChoiceVar.__init__(self, parent, options)
         self.var = self.params["convar"]
@@ -84,6 +88,7 @@ class ChoiceVarBinary(menu.ChoiceVarBinary):
             description="The default value."
         )
     )
+
     def __init__(self, parent, options):
         menu.ChoiceVarBinary.__init__(self, parent, options)
         self.var = self.params["convar"]
@@ -133,7 +138,7 @@ class FireableCmd(menu.FireableCmd):
     def __init__(self, parent, options):
         menu.FireableCmd.__init__(self, parent, options)
         self.set_command(self.params["concmd"])
-        if self.params["text"] == None:
+        if self.params["text"] is None:
             self.text = self.params["concmd"]
         else:
             self.text = self.params["text"]
@@ -171,16 +176,18 @@ class Bar(menu.Bar):
         String(
             "strleft",
             default="",
-            description=
+            description=(
                 "For style 'str', what string to be displayed on the left side"
                 " of the bar."
+            )
         ),
         String(
             "strright",
             default="",
-            description=
+            description=(
                 "For style 'str', what string to be displayed on the right"
                 " side of the bar."
+            )
         ),
         Number(
             "default",
@@ -188,7 +195,7 @@ class Bar(menu.Bar):
             default=0
         )
     )
-    
+
     def __init__(self, parent, options):
         menu.Bar.__init__(self, parent, options)
         self.min = self.params["min"]
@@ -219,7 +226,6 @@ class Message(menu.Message):
         self.make_choices()
 
 
-#@Component("presetchooser")
 class PresetChooser(menu.PresetChooser):
     params = ParamObj(
         Name("Generic Preset Chooser"),
@@ -239,7 +245,7 @@ class PresetChooser(menu.PresetChooser):
             description="The presets that will be used."
         )
     )
-    
+
     def __init__(self, parent, options, partype):
         self.partype = partype
         self.partype.register(self)
@@ -257,21 +263,24 @@ class PresetChooser(menu.PresetChooser):
                 cmds
             )
         self.make_choices()
-    
+
     def flex_callback(self, obj, after):
         """
         Before evaluating preset params, this is called in order to merge
         the inherited properties if they aren't in the class yet.
         """
         if "inherit" in after and after["inherit"] is not None:
-            pseti = self.menu_root.get_preset(self.preset_type, after["inherit"])
+            pseti = self.menu_root.get_preset(
+                self.preset_type,
+                after["inherit"]
+            )
             for k in pseti:
                 if k not in obj:
                     after[k] = pseti[k]
         if "name" in after and after["name"] is not None:
             self.menu_root.add_preset(self.preset_type, after["name"], after)
         return after
-    
+
     def get_params(self, cur_type):
         """
         Overridden because the child class will always pass a custom parameter
@@ -283,7 +292,7 @@ class PresetChooser(menu.PresetChooser):
             newpars.children["presets"].merge(self.partype)
             newpars.children["presets"].callback = self.flex_callback
         return (newpars, cur_type.__base__)
-    
+
     def make_param_cmd(self, obj, key):
         """
         Convenience method to bind convars from param objects to real concmds.
@@ -307,5 +316,6 @@ class PresetChooser(menu.PresetChooser):
                     )
                 )
             return out
+
 
 name_space()

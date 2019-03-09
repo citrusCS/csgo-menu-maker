@@ -10,7 +10,7 @@ class Message(Menu):
     """
     Show a static message.
     """
-    
+
     def __init__(self, parent, options):
         Menu.__init__(self, parent, options)
         self.text = ""
@@ -33,12 +33,12 @@ class Message(Menu):
             lines[i] = line.replace("\b", "")
             lines[i] = line.replace("\"", "")
             lines[i] = line.replace("\t", "    ")
-        
+
         # Word wrap each line and place it into a list.
         total_lines = []
         for i, line in enumerate(lines):
             total_lines.extend(misc.text_word_wrap(line, 40))
-            
+
         # Split total_lines into a set of pages, with each page having four
         # wrapped lines.
         pages = math.ceil(len(total_lines) / 4)

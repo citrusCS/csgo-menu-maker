@@ -8,7 +8,7 @@ class PresetChooser(Choice):
     """
     Choose between a set of presets in the menu.
     """
-    
+
     def __init__(self, parent, options):
         Choice.__init__(self, parent, options)
 

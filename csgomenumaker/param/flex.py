@@ -6,6 +6,7 @@ from .param import Param
 from .assoc import Assoc
 from .paramobj import ParamObj
 
+
 class Flex(Assoc):
     """
     A special type of param that allows the writer of the config file to
@@ -17,10 +18,11 @@ class Flex(Assoc):
     - flexkeyname
         The key to substitute in for each string key in the list or dict
     """
+
     def __init__(self, key, *args, **kwargs):
         Assoc.__init__(self, key, *args, **kwargs)
         self.callback = None
-    
+
     def evaluate(self, options):
         """
         This overrides Assoc, which overrides ParamObj. Speaking about
@@ -81,4 +83,3 @@ class Flex(Assoc):
             out[-1][self.default_kwarg("flexkeyname", "name")] = \
                 random.choice(RANDOM_WORDS)
         return out
-            

@@ -5,15 +5,16 @@ from .file import File
 class Indirect(Command):
     """
     Wrapper around File to correctly generate exec commands.
-    
+
     This should be used if you need to make a file with command contents.
     """
+
     def __init__(self, parent):
         Command.__init__(self, parent, "indirect")
-        
+
         # Container is not really a container. I shouldn't have named it that.
         self.container = File(self)
-        
+
         # Set the hide_children flag, as this command's contents should not be
         # put into `main.cfg`.
         self.hide_children = True

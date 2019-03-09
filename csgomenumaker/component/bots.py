@@ -7,10 +7,12 @@ from . import generic
 name_space(
     "bots",
     name="Bots",
-    description=
+    description=(
         "Bot related commands which do things like add bots, change bot"
         " difficulty, etc."
+    )
 )
+
 
 @Component("addct", "add_ct")
 class AddCT(generic.FireableCmd):
@@ -20,6 +22,7 @@ class AddCT(generic.FireableCmd):
         Override("concmd", "bot_add_ct")
     )
 
+
 @Component("addt", "add_t")
 class AddT(generic.FireableCmd):
     params = ParamObj(
@@ -28,6 +31,7 @@ class AddT(generic.FireableCmd):
         Override("concmd", "bot_add_t")
     )
 
+
 @Component("kick")
 class Kick(generic.FireableCmd):
     params = ParamObj(
@@ -35,6 +39,7 @@ class Kick(generic.FireableCmd):
         Desc("Kick all bots."),
         Override("concmd", "bot_kick")
     )
+
 
 @Component("kill")
 class Kill(generic.FireableCmd):
@@ -45,6 +50,7 @@ class Kill(generic.FireableCmd):
         flags=["cheat"]
     )
 
+
 @Component("kill.ct", "kill_ct")
 class KillCT(generic.FireableCmd):
     params = ParamObj(
@@ -53,6 +59,7 @@ class KillCT(generic.FireableCmd):
         Override("concmd", "bot_kill ct"),
         flags=["cheat"]
     )
+
 
 @Component("kill.t", "kill_t")
 class KillT(generic.FireableCmd):
@@ -63,6 +70,7 @@ class KillT(generic.FireableCmd):
         flags=["cheat"]
     )
 
+
 @Component("stop")
 class Stop(generic.ChoiceVarBinary):
     params = ParamObj(
@@ -72,6 +80,7 @@ class Stop(generic.ChoiceVarBinary):
         flags=["cheat"]
     )
 
+
 @Component("allweapons", "all_weapons")
 class AllWeapons(generic.FireableCmd):
     params = ParamObj(
@@ -79,6 +88,7 @@ class AllWeapons(generic.FireableCmd):
         Desc("Allow bots to use all weapons available."),
         Override("concmd", "bot_all_weapons")
     )
+
 
 @Component("allowrogues", "allow_rogues", "rogues")
 class AllowRogues(generic.ChoiceVarBinary):
@@ -91,6 +101,7 @@ class AllowRogues(generic.ChoiceVarBinary):
         Override("convar", "bot_allow_rogues")
     )
 
+
 @Component("chatter")
 class Chatter(generic.ChoiceVar):
     params = ParamObj(
@@ -98,7 +109,7 @@ class Chatter(generic.ChoiceVar):
         Desc("Control how bots talk."),
         Override("convar", "bot_chatter"),
         Override(
-            "choices", 
+            "choices",
             [
                 "off",
                 "radio",
@@ -107,6 +118,7 @@ class Chatter(generic.ChoiceVar):
             ]
         )
     )
+
 
 @Component("difficulty")
 class Difficulty(generic.Bar):
@@ -121,6 +133,7 @@ class Difficulty(generic.Bar):
         Override("default", 1)
     )
 
+
 @Component("dontshoot", "dont_shoot", "noshoot")
 class DontShoot(generic.ChoiceVarBinary):
     params = ParamObj(
@@ -129,6 +142,7 @@ class DontShoot(generic.ChoiceVarBinary):
         Override("convar", "bot_dont_shoot"),
         flags=["cheat"]
     )
+
 
 @Component("freeze")
 class Freeze(generic.ChoiceVarBinary):
@@ -139,11 +153,13 @@ class Freeze(generic.ChoiceVarBinary):
         flags=["cheat"]
     )
 
+
 name_space(
     "weapon_type",
     name="Weapon Types",
     description="Control which weapons bots are allowed to use."
 )
+
 
 @Component("grenades", "nades")
 class Grenades(generic.ChoiceVarBinary):
@@ -154,6 +170,7 @@ class Grenades(generic.ChoiceVarBinary):
         Override("default", 1)
     )
 
+
 @Component("machineguns", "machine_guns")
 class MachineGuns(generic.ChoiceVarBinary):
     params = ParamObj(
@@ -162,6 +179,7 @@ class MachineGuns(generic.ChoiceVarBinary):
         Override("convar", "bot_allow_machine_guns"),
         Override("default", 1)
     )
+
 
 @Component("pistols")
 class Pistols(generic.ChoiceVarBinary):
@@ -172,6 +190,7 @@ class Pistols(generic.ChoiceVarBinary):
         Override("default", 1)
     )
 
+
 @Component("rifles")
 class Rifles(generic.ChoiceVarBinary):
     params = ParamObj(
@@ -180,6 +199,7 @@ class Rifles(generic.ChoiceVarBinary):
         Override("convar", "bot_allow_rifles"),
         Override("default", 1)
     )
+
 
 @Component("shotguns")
 class Shotguns(generic.ChoiceVarBinary):
@@ -190,6 +210,7 @@ class Shotguns(generic.ChoiceVarBinary):
         Override("default", 1)
     )
 
+
 @Component("snipers")
 class Snipers(generic.ChoiceVarBinary):
     params = ParamObj(
@@ -198,6 +219,7 @@ class Snipers(generic.ChoiceVarBinary):
         Override("convar", "bot_allow_snipers"),
         Override("default", 1)
     )
+
 
 @Component("submachineguns", "sub_machine_guns", "smgs")
 class SubMachineGuns(generic.ChoiceVarBinary):
@@ -208,7 +230,9 @@ class SubMachineGuns(generic.ChoiceVarBinary):
         Override("default", 1)
     )
 
+
 name_space()
+
 
 @Component("quota")
 class Quota(generic.Bar):
@@ -223,6 +247,7 @@ class Quota(generic.Bar):
         Override("default", 10)
     )
 
+
 @Component("mimic")
 class Mimic(generic.ChoiceVarBinary):
     params = ParamObj(
@@ -231,6 +256,7 @@ class Mimic(generic.ChoiceVarBinary):
         Override("convar", "bot_mimic"),
         flags=["cheat"]
     )
+
 
 @Component("zombie")
 class Zombie(generic.ChoiceVarBinary):
@@ -241,6 +267,7 @@ class Zombie(generic.ChoiceVarBinary):
         flags=["cheat"]
     )
 
+
 @Component("ignoreplayers", "ignore_players")
 class IgnorePlayers(generic.ChoiceVarBinary):
     params = ParamObj(
@@ -250,13 +277,15 @@ class IgnorePlayers(generic.ChoiceVarBinary):
         flags=["cheat"]
     )
 
+
 @Component("jointeam", "join_team")
 class JoinTeam(generic.ChoiceVar):
     params = ParamObj(
         Name("Join Team"),
         Desc("Control which team bots will join into."),
         Override("convar", "bot_join_team"),
-        Override("choices",
+        Override(
+            "choices",
             [
                 "any",
                 "T",
@@ -264,6 +293,7 @@ class JoinTeam(generic.ChoiceVar):
             ]
         )
     )
+
 
 @Component("randombuy", "random_buy")
 class RandomBuy(generic.ChoiceVarBinary):
@@ -274,6 +304,7 @@ class RandomBuy(generic.ChoiceVarBinary):
         flags=["cheat"]
     )
 
+
 @Component("place")
 class Place(generic.FireableCmd):
     params = ParamObj(
@@ -282,5 +313,6 @@ class Place(generic.FireableCmd):
         Override("concmd", "bot_place"),
         flags=["cheat"]
     )
+
 
 name_space()

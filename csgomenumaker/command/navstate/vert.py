@@ -6,13 +6,13 @@ from .navstate import NavState
 class Vert(NavState):
     """
     A vertical state transitioner.
-    
+
     Vert instances are toggled between when you press up or down in the UI.
     """
     def __init__(self, parent):
         NavState.__init__(self, parent)
         self.cls = "nav-vert"
-        
+
         # Dummy placeholder.
         self.dummy = None
 
@@ -40,7 +40,7 @@ class Vert(NavState):
         # some point. But not now.
         if len(self.selections) == 0:
             self.error("No selections present!")
-        
+
         # Bind a default entry for the first element.
         entry_hook = self.actions["entry"].hook
         entry_hook += self.selections[0].actions["entry"].hook
@@ -49,6 +49,6 @@ class Vert(NavState):
             self.neighbors["back"].parent.actions["fire_back"],
             self.actions["entry"]
         )
-            
+
         for ch in self.selections:
             ch.make_realiases()

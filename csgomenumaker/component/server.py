@@ -10,6 +10,7 @@ name_space(
     description="Miscellaneous server commands."
 )
 
+
 @Component(
     "bhopenable",
     "bhop",
@@ -26,22 +27,22 @@ class BHopEnable(generic.Choice):
             "choices",
             [
                 {
-                    "name" : "Off",
-                    "commands" : [
+                    "name": "Off",
+                    "commands": [
                         "sv_enablebunnyhopping 0"
                         "sv_autobunnyhopping 0"
                     ]
                 },
                 {
-                    "name" : "Easy",
-                    "commands" : [
+                    "name": "Easy",
+                    "commands": [
                         "sv_enablebunnyhopping 1"
                         "sv_autobunnyhopping 1"
                     ]
                 },
                 {
-                    "name" : "Pro",
-                    "commands" : [
+                    "name": "Pro",
+                    "commands": [
                         "sv_enablebunnyhopping 1"
                         "sv_autobunnyhopping 0"
                     ]
@@ -50,67 +51,85 @@ class BHopEnable(generic.Choice):
         )
     )
 
+# `sv_airaccelerate` values taken from https://bit.ly/2HaLlPL
 @Component("surfenable", "surf", "surf_enable")
 class SurfEnable(generic.Choice):
     params = ParamObj(
         Name("Surf Enable"),
-        Desc("Enable and change surf difficulty."),
+        Desc(
+            "Enable and change surf difficulty. Harder values have lower "
+            "sv_airaccelerate values."
+        ),
         Override(
             "choices",
             [
                 {
-                    "name" : "Off",
-                    "commands" : [
+                    "name": "Off",
+                    "commands": [
                         "sv_accelerate 5.6",
                         "sv_airaccelerate 12"
                     ]
                 },
                 {
-                    "name" : "Very Easy",
-                    "commands" : [
+                    "name": "Very Easy",
+                    "commands": [
                         "sv_accelerate 10",
                         "sv_airaccelerate 1000"
                     ]
                 },
                 {
-                    "name" : "Fun",
-                    "commands" : [
+                    "name": "Fun",
+                    "commands": [
                         "sv_accelerate 10",
                         "sv_airaccelerate 800"
                     ]
                 },
                 {
-                    "name" : "Easy",
-                    "commands" : [
+                    "name": "Easy",
+                    "commands": [
                         "sv_accelerate 10",
                         "sv_airaccelerate 400"
                     ]
                 },
                 {
-                    "name" : "Medium",
-                    "commands" : [
+                    "name": "Medium",
+                    "commands": [
                         "sv_accelerate 10",
                         "sv_airaccelerate 200"
                     ]
                 },
                 {
-                    "name" : "Hard",
-                    "commands" : [
+                    "name": "Hard",
+                    "commands": [
                         "sv_accelerate 10",
                         "sv_airaccelerate 150"
                     ]
                 },
                 {
-                    "name" : "Expert",
-                    "commands" : [
+                    "name": "Expert",
+                    "commands": [
+                        "sv_accelerate 10",
+                        "sv_airaccelerate 125"
+                    ]
+                },
+                {
+                    "name": "Pro",
+                    "commands": [
                         "sv_accelerate 10",
                         "sv_airaccelerate 100"
                     ]
+                },
+                {
+                    "name": "Handicap",
+                    "commands": [
+                        "sv_accelerate 10",
+                        "sv_airaccelerate 75"
+                    ]
                 }
             ]
-        ),
-        notes=["`sv_airaccelerate` values taken from https://bit.ly/2HaLlPL"]
+        )
     )
+
 
 @Component("coachingenable", "coaching_enable", "coaching")
 class CoachingEnable(generic.ChoiceVarBinary):
@@ -120,6 +139,7 @@ class CoachingEnable(generic.ChoiceVarBinary):
         Override("convar", "sv_coaching_enabled")
     )
 
+
 @Component("deadtalkenable", "dead_talk_enable", "deadtalk")
 class DeadTalkEnable(generic.ChoiceVarBinary):
     params = ParamObj(
@@ -127,6 +147,7 @@ class DeadTalkEnable(generic.ChoiceVarBinary):
         Desc("Toggle dead players being able to talk to alive players."),
         Override("convar", "sv_deadtalk")
     )
+
 
 @Component(
     "falldamagescale",
@@ -148,6 +169,7 @@ class FallDamageScale(generic.Bar):
         Override("default", 1)
     )
 
+
 @Component(
     "outofammoindicator",
     "out_of_ammo_indicator",
@@ -162,5 +184,6 @@ class OutOfAmmoIndicator(generic.ChoiceVarBinary):
         Desc("Toggle the no-ammo sound."),
         Override("convar", "sv_outofammo_indicator")
     )
+
 
 name_space()

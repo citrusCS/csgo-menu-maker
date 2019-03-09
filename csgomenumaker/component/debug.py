@@ -8,10 +8,12 @@ from . import generic
 name_space(
     "debug",
     name="Debug",
-    description=
+    description=(
         "Debugging options that show different data on-screen, such as fps,"
         " position, traces, etc."
+    )
 )
+
 
 @Component("showpos", "show_pos")
 class ShowPos(generic.ChoiceVarBinary):
@@ -21,6 +23,7 @@ class ShowPos(generic.ChoiceVarBinary):
         Override("convar", "cl_showpos")
     )
 
+
 @Component("showfps", "show_fps")
 class ShowFPS(generic.ChoiceVarBinary):
     params = ParamObj(
@@ -29,6 +32,7 @@ class ShowFPS(generic.ChoiceVarBinary):
         Override("convar", "cl_showfps")
     )
 
+
 @Component("netgraph", "net_graph")
 class NetGraph(generic.ChoiceVarBinary):
     params = ParamObj(
@@ -36,6 +40,7 @@ class NetGraph(generic.ChoiceVarBinary):
         Desc("Show network stats and frames per second."),
         Override("convar", "net_graph")
     )
+
 
 @Component("entityreport", "entity_report")
 class EntityReport(generic.ChoiceVarBinary):
@@ -46,6 +51,7 @@ class EntityReport(generic.ChoiceVarBinary):
         flags=["cheat"]
     )
 
+
 @Component("drawwireframe", "draw_wireframe")
 class DrawWireframe(generic.ChoiceVarBinary):
     params = ParamObj(
@@ -54,6 +60,7 @@ class DrawWireframe(generic.ChoiceVarBinary):
         Override("convar", "mat_wireframe"),
         flags=["cheat"]
     )
+
 
 @Component("showevents", "show_events")
 class ShowEvents(generic.ChoiceVarBinary):
@@ -64,6 +71,7 @@ class ShowEvents(generic.ChoiceVarBinary):
         flags=["cheat"]
     )
 
+
 @Component("visualizetraces", "visualize_traces")
 class VisualizeTraces(generic.ChoiceVarBinary):
     params = ParamObj(
@@ -72,6 +80,7 @@ class VisualizeTraces(generic.ChoiceVarBinary):
         Override("convar", "r_visualizetraces"),
         flags=["cheat"]
     )
+
 
 @Component("showbudget", "show_budget")
 class ShowBudget(generic.Choice):
@@ -85,14 +94,14 @@ class ShowBudget(generic.Choice):
             "choices",
             [
                 {
-                    "name" : "-showbudget",
-                    "commands" : [
+                    "name": "-showbudget",
+                    "commands": [
                         "-showbudget"
                     ]
                 },
                 {
-                    "name" : "+showbudget",
-                    "commands" : [
+                    "name": "+showbudget",
+                    "commands": [
                         "+showbudget"
                     ]
                 }
@@ -100,6 +109,7 @@ class ShowBudget(generic.Choice):
         ),
         flags=["cheat"]
     )
+
 
 @Component("drawskeleton", "draw_skeleton")
 class DrawSkeleton(generic.ChoiceVarBinary):
@@ -110,6 +120,7 @@ class DrawSkeleton(generic.ChoiceVarBinary):
         flags=["cheat"]
     )
 
+
 @Component("debugmenu", "debug_menu")
 class DebugMenu(generic.FireableCmd):
     params = ParamObj(
@@ -118,6 +129,7 @@ class DebugMenu(generic.FireableCmd):
         Override("concmd", "debugsystemui"),
         flags=["cheat", "needs_fireable"]
     )
+
 
 @Component("lockpvs", "lock_pvs")
 class LockPVS(generic.ChoiceVarBinary):
@@ -129,6 +141,7 @@ class LockPVS(generic.ChoiceVarBinary):
         Override("convar", "r_lockpvs"),
         flags=["cheat"]
     )
+
 
 @Component(
     "drawvguitree",
@@ -145,6 +158,7 @@ class DrawVGUITree(generic.ChoiceVarBinary):
         Override("convar", "vgui_draw_tree")
     )
 
+
 @Component("showsound", "show_sound")
 class ShowSound(generic.ChoiceVarBinary):
     params = ParamObj(
@@ -157,6 +171,7 @@ class ShowSound(generic.ChoiceVarBinary):
         flags=["cheat"]
     )
 
+
 @Component("showlagcompensation", "show_lag_compensation")
 class ShowLagCompensation(generic.ChoiceVarBinary):
     params = ParamObj(
@@ -164,6 +179,7 @@ class ShowLagCompensation(generic.ChoiceVarBinary):
         Desc("Show a lag compensated hitboxes, clientside."),
         Override("convar", "sv_showlagcompensation")
     )
+
 
 @Component("showbullethits", "show_bullet_hits")
 class ShowBulletHits(generic.ChoiceVarBinary):
@@ -174,6 +190,7 @@ class ShowBulletHits(generic.ChoiceVarBinary):
         flags=["replicated"]
     )
 
+
 @Component("showimpacts", "show_impacts")
 class ShowImpacts(generic.ChoiceVarBinary):
     params = ParamObj(
@@ -182,5 +199,6 @@ class ShowImpacts(generic.ChoiceVarBinary):
         Override("convar", "sv_showimpacts"),
         flags=["replicated"]
     )
+
 
 name_space()

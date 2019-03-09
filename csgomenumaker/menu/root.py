@@ -5,11 +5,11 @@ from .folder import Folder
 class Root(Folder):
     """
     Root menu object.
-    
+
     Always the first Menu subclass initialized. Also, holds global
     PresetChooser presets.
     """
-    
+
     def __init__(self, parent, options):
         self.preset_store = {}
         self.preset_cmd_store = {}
@@ -69,14 +69,14 @@ class Root(Folder):
             self.error("No such preset class '%s'!" % cls)
         if name not in self.preset_store[cls].keys():
             self.error(
-                "No such preset named '%s' of class '%s'!" % 
+                "No such preset named '%s' of class '%s'!" %
                 (
                     name,
                     cls
                 )
             )
         return self.preset_store[cls][name]
-    
+
     def get_preset_cmds(self, cls, name):
         """
         Return the preset commands of class `cls` and name `name`.

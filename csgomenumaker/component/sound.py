@@ -4,21 +4,26 @@ from .component import *
 
 from . import generic
 
+
 name_space(
     "sound",
     name="Sound",
-    description=
+    description=(
         "Sound and DSP settings, including volume adjustments for various"
         " parts of the game."
+    )
 )
+
 
 name_space(
     "volume",
     name="Volume",
-    description=
-        "Volume adjustment for the various game context, including master,"
+    description=(
+        "Volume adjustment for the various game contexts, including master,"
         " voice, menu, and others."
+    )
 )
+
 
 @Component("master", "volume")
 class MasterVolume(generic.Bar):
@@ -33,6 +38,7 @@ class MasterVolume(generic.Bar):
         Override("default", 1)
     )
 
+
 @Component("voice")
 class VoiceVolume(generic.Bar):
     params = ParamObj(
@@ -45,6 +51,7 @@ class VoiceVolume(generic.Bar):
         Override("style", "percent"),
         Override("default", 1)
     )
+
 
 @Component("menu")
 class MenuVolume(generic.Bar):
@@ -59,6 +66,7 @@ class MenuVolume(generic.Bar):
         Override("default", 1)
     )
 
+
 @Component("roundstart", "round_start")
 class RoundStartVolume(generic.Bar):
     params = ParamObj(
@@ -71,6 +79,7 @@ class RoundStartVolume(generic.Bar):
         Override("style", "percent"),
         Override("default", 1)
     )
+
 
 @Component("roundend", "round_end")
 class RoundEndVolume(generic.Bar):
@@ -85,6 +94,7 @@ class RoundEndVolume(generic.Bar):
         Override("default", 1)
     )
 
+
 @Component("objective", "bomb_hostage")
 class ObjectiveVolume(generic.Bar):
     params = ParamObj(
@@ -97,6 +107,7 @@ class ObjectiveVolume(generic.Bar):
         Override("style", "percent"),
         Override("default", 1)
     )
+
 
 @Component("tensecond", "ten_second", "10second", "10_second")
 class TenSecond(generic.Bar):
@@ -111,6 +122,7 @@ class TenSecond(generic.Bar):
         Override("default", 1)
     )
 
+
 @Component("deathcam", "death_cam", "deathcamera", "death_camera")
 class DeathCam(generic.Bar):
     params = ParamObj(
@@ -123,6 +135,7 @@ class DeathCam(generic.Bar):
         Override("style", "percent"),
         Override("default", 1)
     )
+
 
 @Component("mvp", "mostvaluableplayer", "most_valuable_player")
 class MVPVolume(generic.Bar):
@@ -137,6 +150,7 @@ class MVPVolume(generic.Bar):
         Override("default", 1)
     )
 
+
 @Component("dangerzone", "danger_zone")
 class DangerZoneVolume(generic.Bar):
     params = ParamObj(
@@ -150,7 +164,9 @@ class DangerZoneVolume(generic.Bar):
         Override("default", 1)
     )
 
+
 name_space()
+
 
 @Component("reloaddsp", "reload_dsp")
 class ReloadDSP(generic.FireableCmd):
@@ -161,6 +177,7 @@ class ReloadDSP(generic.FireableCmd):
         flags=["cheat"]
     )
 
+
 @Component("reloadsnd", "reload_snd")
 class ReloadSND(generic.FireableCmd):
     params = ParamObj(
@@ -169,6 +186,7 @@ class ReloadSND(generic.FireableCmd):
         Override("concmd", "snd_reload"),
         flags=["cheat"]
     )
+
 
 @Component("gain")
 class Gain(generic.FireableCmd):

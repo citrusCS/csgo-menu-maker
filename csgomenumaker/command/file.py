@@ -5,20 +5,21 @@ class File(Command):
     """
     Corresponds to a .cfg file with contents. Places each child on a line in
     the file.
-    
+
     Only used internally by Indirect.
     """
+
     def __init__(self, parent):
         Command.__init__(self, parent, "file")
-        
+
         # file_id and bucket correspond to the path location in which the file
         # is placed.
         self.file_id = self.root.get_next_file_id()
         self.bucket = self.file_id % 16
-        
+
         # text is a list of each line in the file.
         self.text = []
-        
+
         # Register the file with root so that it knows to create it.
         self.root.file_stash[self.bucket].append(self)
 

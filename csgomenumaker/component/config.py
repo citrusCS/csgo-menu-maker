@@ -8,9 +8,22 @@ from . import generic
 name_space(
     "config",
     name="Configuration",
-    description=
+    description=(
         "Common configuration options that CS:GO players tend to use the most."
+    )
 )
+
+
+CROSSHAIR_STYLES = """
+| Number | Name            | Description                             |
+|--------|-----------------|-----------------------------------------|
+| 0      | Default         | New look, move/shoot spread             |
+| 1      | Default Static  | New look, no spread                     |
+| 2      | Classic         | Old look, eight pips, move/shoot spread |
+| 3      | Classic Dynamic | Old look, four pips, move/shoot spread  |
+| 4      | Classic Static  | Old look, four pips, no spread          |
+| 5      | Classic Legacy  | Old look, four pips, shoot spread       |
+"""
 
 AUTOBUY_WEAPONS = [
     "ak47",         "aug",          "awp",          "bizon",
@@ -36,14 +49,18 @@ class Crosshair(generic.PresetChooser):
     def __init__(self, parent, options):
         self.preset_type = "crosshair"
         # https://developer.valvesoftware.com/wiki/List_of_CS:GO_Cvars
-        generic.PresetChooser.__init__(self, parent, options, 
+        generic.PresetChooser.__init__(
+            self,
+            parent,
+            options,
             ParamObj(
                 Binary(
                     "drawoutline",
                     default=1,
-                    description=
+                    description=(
                         "Draws a black outline around the crosshair for "
-                        "better visibility.",
+                        "better visibility."
+                    ),
                     convar="cl_crosshair_drawoutline",
                 ),
                 Number(
@@ -51,10 +68,11 @@ class Crosshair(generic.PresetChooser):
                     min=0,
                     max=1,
                     default=0.35,
-                    description=
+                    description=(
                         "If using cl_crosshairstyle 2, this is the ratio used "
                         "to determine how long the inner and outer xhair pips "
-                        "will be.",
+                        "will be."
+                    ),
                     convar="cl_crosshair_dynamic_maxdist_splitratio"
                 ),
                 Number(
@@ -62,10 +80,11 @@ class Crosshair(generic.PresetChooser):
                     min=0,
                     max=1,
                     default=0.5,
-                    description=
+                    description=(
                         "If using cl_crosshairstyle 2, this is the alpha "
                         "modification that will be used for the INNER "
-                        "crosshair pips once they've split.",
+                        "crosshair pips once they've split."
+                    ),
                     convar="cl_crosshair_dynamic_splitalpha_innermod"
                 ),
                 Number(
@@ -73,18 +92,20 @@ class Crosshair(generic.PresetChooser):
                     min=0.3,
                     max=1,
                     default=0.5,
-                    description=
+                    description=(
                         "If using cl_crosshairstyle 2, this is the alpha "
                         "modification that will be used for the OUTER "
-                        "crosshair pips once they've split.",
+                        "crosshair pips once they've split."
+                    ),
                     convar="cl_crosshair_dynamic_splitalpha_outermod"
                 ),
                 Number(
                     "dynamic_splitdist",
                     default=7,
-                    description=
+                    description=(
                         "If using cl_crosshairstyle 2, this is the distance "
-                        "that the crosshair pips will split into 2.",
+                        "that the crosshair pips will split into 2."
+                    ),
                     convar="cl_crosshair_dynamic_splitdist"
                 ),
                 Number(
@@ -92,44 +113,36 @@ class Crosshair(generic.PresetChooser):
                     min=0.1,
                     max=3,
                     default=1,
-                    description=
+                    description=(
                         "Set how thick you want your crosshair outline to "
-                        "draw.",
+                        "draw."
+                    ),
                     convar="cl_crosshair_outlinethickness"
                 ),
-                # Number(
-                    # "recoil",
-                    # min=0,
-                    # max=1,
-                    # default=0,
-                    # hide=True,
-                    # cheat=True,
-                    # description=
-                        # "Recoil/aimpunch will move the user's crosshair to "
-                        # "show the effect.",
-                    # convar="cl_crosshair_recoil"
-                # ),
                 Binary(
                     "sniper_show_normal_inaccuracy",
                     default=0,
-                    description=
+                    description=(
                         "Include standing inaccuracy when determining sniper "
-                        "crosshair blur.",
+                        "crosshair blur."
+                    ),
                     convar="cl_crosshair_sniper_show_normal_inaccuracy"
                 ),
                 Number(
                     "sniper_width",
                     default=1,
-                    description=
+                    description=(
                         "If >1 sniper scope cross lines gain extra width (1 "
-                        "for single-pixel hairline)",
+                        "for single-pixel hairline)"
+                    ),
                     convar="cl_crosshair_sniper_width"
                 ),
                 Binary(
                     "t_shape",
                     default=0,
-                    description=
-                        "T style crosshair.",
+                    description=(
+                        "T style crosshair."
+                    ),
                     convar="cl_crosshair_t"
                 ),
                 Number(
@@ -153,8 +166,9 @@ class Crosshair(generic.PresetChooser):
                 Binary(
                     "dot",
                     default=1,
-                    description=
-                        "Show dot in the middle of the crosshair.",
+                    description=(
+                        "Show dot in the middle of the crosshair."
+                    ),
                     convar="cl_crosshairdot"
                 ),
                 Number(
@@ -166,17 +180,19 @@ class Crosshair(generic.PresetChooser):
                 Binary(
                     "gap_useweaponvalue",
                     default=0,
-                    description=
+                    description=(
                         "If set to 1, the gap will update dynamically "
-                        "based on which weapon is currently equipped ",
+                        "based on which weapon is currently equipped."
+                    ),
                     convar="cl_crosshairgap_useweaponvalue"
                 ),
                 Number(
                     "fixed_gap",
                     default=3,
-                    description=
+                    description=(
                         "How big to make the gap between the pips in the "
-                        "fixed crosshair",
+                        "fixed crosshair"
+                    ),
                     convar="cl_fixedcrosshairgap"
                 ),
                 Number(
@@ -188,15 +204,7 @@ class Crosshair(generic.PresetChooser):
                 Number(
                     "style",
                     default=5,
-                    description=
-    "| Number | Name            | Description                             |\n"
-    "|--------|-----------------|-----------------------------------------|\n"
-    "| 0      | Default         | New look, move/shoot spread             |\n"
-    "| 1      | Default Static  | New look, no spread                     |\n"
-    "| 2      | Classic         | Old look, eight pips, move/shoot spread |\n"
-    "| 3      | Classic Dynamic | Old look, four pips, move/shoot spread  |\n"
-    "| 4      | Classic Static  | Old look, four pips, no spread          |\n"
-    "| 5      | Classic Legacy  | Old look, four pips, shoot spread       |\n",
+                    description=CROSSHAIR_STYLES,
                     convar="cl_crosshairstyle"
                 ),
                 Number(
@@ -208,16 +216,18 @@ class Crosshair(generic.PresetChooser):
                 Binary(
                     "usealpha",
                     default=1,
-                    description=
-                        "Whether or not to use the alpha value from 'alpha'.",
+                    description=(
+                        "Whether or not to use the alpha value from 'alpha'."
+                    ),
                     convar="cl_crosshairusealpha"
                 ),
                 Number(
                     "color_preset",
                     default=5,
-                    description=
+                    description=(
                         "When 'style' is 0 or 1, this controls the "
-                        "crosshair's color.",
+                        "crosshair's color."
+                    ),
                     convar="cl_crosshaircolor"
                 ),
                 pure=True,
@@ -257,17 +267,22 @@ class Viewmodel(generic.PresetChooser):
         Name("Viewmodel"),
         Desc("Choose from viewmodel presets.")
     )
+
     def __init__(self, parent, options):
         self.preset_type = "viewmodel"
-        generic.PresetChooser.__init__(self, parent, options,
+        generic.PresetChooser.__init__(
+            self,
+            parent,
+            options,
             ParamObj(
                 Number(
                     "bob_lower",
                     min=5,
                     max=30,
                     default=21,
-                    description=
-                        "The amount the viewmodel lowers when running.",
+                    description=(
+                        "The amount the viewmodel lowers when running."
+                    ),
                     convar="cl_bob_lower_amt"
                 ),
                 Number(
@@ -275,9 +290,10 @@ class Viewmodel(generic.PresetChooser):
                     min=0.1,
                     max=2,
                     default=0.4,
-                    description=
+                    description=(
                         "The amount the viewmodel moves side to side when "
-                        "running.",
+                        "running."
+                    ),
                     convar="cl_bobamt_lat"
                 ),
                 Number(
@@ -285,9 +301,10 @@ class Viewmodel(generic.PresetChooser):
                     min=0.1,
                     max=2,
                     default=0.25,
-                    description=
+                    description=(
                         "The amount the viewmodel moves up and down when "
-                        "running.",
+                        "running."
+                    ),
                     convar="cl_bobamt_vert"
                 ),
                 Number(
@@ -309,9 +326,10 @@ class Viewmodel(generic.PresetChooser):
                     min=0.5,
                     max=2,
                     default=1.5,
-                    description=
+                    description=(
                         "The amount the viewmodel shifts to the left when "
-                        "shooting accuracy increases.",
+                        "shooting accuracy increases."
+                    ),
                     convar="cl_viewmodel_shift_left_amt"
                 ),
                 Number(
@@ -319,9 +337,10 @@ class Viewmodel(generic.PresetChooser):
                     min=0.25,
                     max=2,
                     default=0.75,
-                    description=
+                    description=(
                         "The amount the viewmodel shifts to the right when "
-                        "shooting accuracy decreases.",
+                        "shooting accuracy decreases."
+                    ),
                     convar="cl_viewmodel_shift_right_amt"
                 ),
                 Number(
@@ -332,7 +351,7 @@ class Viewmodel(generic.PresetChooser):
                 ),
                 Position(
                     "offset",
-                    default=[0,0,0],
+                    default=[0, 0, 0],
                     description="The X,Y,Z offset of the rendered viewmodel.",
                     convar=[
                         "viewmodel_offset_x",
@@ -345,15 +364,17 @@ class Viewmodel(generic.PresetChooser):
                     min=0,
                     max=1,
                     default=0,
-                    description=
+                    description=(
                         "Amount of weapon recoil/aimpunch to display on "
-                        "viewmodel",
+                        "viewmodel"
+                    ),
                     convar="viewmodel_recoil"
                 ),
                 pure=True,
                 description="The viewmodel to be used."
             )
         )
+
     def get_commands(self, vmodel):
         commands = [
             self.make_param_cmd(vmodel, "bob_lower"),
@@ -379,7 +400,10 @@ class HUD(generic.PresetChooser):
 
     def __init__(self, parent, options):
         self.preset_type = "hud"
-        generic.PresetChooser.__init__(self, parent, options,
+        generic.PresetChooser.__init__(
+            self,
+            parent,
+            options,
             ParamObj(
                 Number(
                     "scale",
@@ -426,24 +450,27 @@ class HUD(generic.PresetChooser):
                 Binary(
                     "healthammo_style",
                     default=0,
-                    description=
-                        "Whether to use the default or compact HUD layout",
+                    description=(
+                        "Whether to use the default or compact HUD layout"
+                    ),
                     convar="cl_hud_healthammo_style"
                 ),
                 Binary(
                     "playercount_pos",
                     default=0,
-                    description=
+                    description=(
                         "Whether to render the player count at the top or "
-                        "bottom of the screen",
+                        "bottom of the screen"
+                    ),
                     convar="cl_hud_playercount_pos"
                 ),
                 Binary(
                     "playercount_showcount",
                     default=0,
-                    description=
+                    description=(
                         "Whether to show avatars or player counts at the top "
-                        "of the screen",
+                        "of the screen"
+                    ),
                     convar="cl_hud_playercount_showcount"
                 ),
                 Number(
@@ -481,10 +508,13 @@ class Autobuys(generic.PresetChooser):
         Name("Autobuys"),
         Desc("Choose between autobuy presets.")
     )
-    
+
     def __init__(self, parent, options):
         self.preset_type = "autobuys"
-        generic.PresetChooser.__init__(self, parent, options,
+        generic.PresetChooser.__init__(
+            self,
+            parent,
+            options,
             ParamObj(
                 Flex(
                     "binds",
@@ -492,12 +522,12 @@ class Autobuys(generic.PresetChooser):
                         String(
                             "key",
                             description="The key to bind this weapon to.",
-                            ex_vals=["o","p","f1","f2","f3"]
+                            ex_vals=["o", "p", "f1", "f2", "f3"]
                         ),
                         String(
                             "weapon",
                             description="The weapon to use.",
-                            ex_vals=["ak47","hegrenade","deagle"]
+                            ex_vals=["ak47", "hegrenade", "deagle"]
                         )
                     ),
                     zerook=True,
@@ -515,7 +545,10 @@ class Autobuys(generic.PresetChooser):
         Looks through inherit.binds and merges them with the new binds.
         """
         if "inherit" in after and after["inherit"] is not None:
-            pseti = self.menu_root.get_preset(self.preset_type, after["inherit"])
+            pseti = self.menu_root.get_preset(
+                self.preset_type,
+                after["inherit"]
+            )
             for k in pseti:
                 if k not in obj:
                     after[k] = pseti[k]
@@ -542,14 +575,12 @@ class Autobuys(generic.PresetChooser):
                 key = bind["key"]
                 command.Primitive(indir, "unbind", key)
         for bind in autobuy["binds"]:
-            #print(autobuy)
-            #print(bind)
             key = bind["key"]
             wep = bind["weapon"]
             if wep not in AUTOBUY_WEAPONS:
                 self.error("Weapon '%s' not found!" % wep)
             command.Primitive(indir, "bind", [key, '"buy %s"' % wep])
-        return [indir,]
+        return [indir, ]
 
 
 @Component("mode", "modes", "gamemodes", "game_modes")
@@ -558,10 +589,13 @@ class Mode(generic.PresetChooser):
         Name("Game Modes"),
         Desc("Choose between different user-defined gamemode presets.")
     )
-    
+
     def __init__(self, parent, options):
         self.preset_type = "mode"
-        generic.PresetChooser.__init__(self, parent, options,
+        generic.PresetChooser.__init__(
+            self,
+            parent,
+            options,
             ParamObj(
                 Flex(
                     "modes",
@@ -585,13 +619,16 @@ class Mode(generic.PresetChooser):
                 pure=True
             )
         )
-        
+
     def flex_callback(self, obj, after):
         """
         Looks through inherit.modes and merges them with the new modes.
         """
         if "inherit" in after and after["inherit"] is not None:
-            pseti = self.menu_root.get_preset(self.preset_type, after["inherit"])
+            pseti = self.menu_root.get_preset(
+                self.preset_type,
+                after["inherit"]
+            )
             for k in pseti:
                 if k not in obj:
                     after[k] = pseti[k]
@@ -606,7 +643,7 @@ class Mode(generic.PresetChooser):
         if "name" in after and after["name"] is not None:
             self.menu_root.add_preset(self.preset_type, after["name"], after)
         return after
-        
+
     def get_commands(self, mode):
         commands = []
         for md in mode["modes"]:
@@ -622,5 +659,6 @@ class Mode(generic.PresetChooser):
                 )
             )
         return commands
+
 
 name_space()

@@ -3,6 +3,7 @@ import copy
 component_name_space = []
 type_mapping = {}
 
+
 def name_space(*args, **kwargs):
     """
     Append/pop to the global namespace path.
@@ -11,6 +12,7 @@ def name_space(*args, **kwargs):
         component_name_space.append((args[0], kwargs))
     else:
         component_name_space.pop()
+
 
 class Component:
     """
@@ -33,8 +35,8 @@ class Component:
         cls.name_space = self.name_space
         cls.aliases = self.aliases
         return cls
-    
+
     def make_type_name(self, n):
         return ".".join(
-            [j[0] for j in self.name_space]+[n,]
+            [j[0] for j in self.name_space] + [n, ]
         )

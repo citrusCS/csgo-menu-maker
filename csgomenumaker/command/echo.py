@@ -14,6 +14,6 @@ class Echo(Primitive):
             self.text = self.root.filter_char+self.root.filter_after+text
         else:
             self.text = self.root.filter_char_out+self.root.filter_after+text
-            
+
         # Pass the argument to Primitive.
         self.args.append('"'+self.text+'"')

@@ -5,6 +5,7 @@ from ..misc import RANDOM_WORDS
 from .param import Param
 from .number import Number
 
+
 class Sequence(Param):
     """
     A list of objects.
@@ -19,12 +20,13 @@ class Sequence(Param):
         Check each value with Number.check() as well, with other kwargs
         pertaining to Number.
     """
+
     def __init__(self, key, *args, **kwargs):
         Param.__init__(self, key, *args, **kwargs)
         if "seqtypes" in self.kwargs:
             if not isinstance(self.kwargs["seqtypes"], tuple):
                 self.kwargs["seqtypes"] = (self.kwargs["seqtypes"],)
-        
+
     def check(self, value):
         """
         Check the given value against the restrictions imposed by this class
@@ -41,7 +43,7 @@ class Sequence(Param):
                             self.key,
                             value
                         )
-                    ) + 
+                    ) +
                     (
                         "(%i != %i)" %
                         (
@@ -73,7 +75,7 @@ class Sequence(Param):
                             self.key,
                             value
                         )
-                    ) + 
+                    ) +
                     (
                         "(%i == %i)" %
                         (
@@ -83,7 +85,7 @@ class Sequence(Param):
                     )
                 )
         return value
-    
+
     def get_example_val(self, rtype=True):
         """
         Return one (1) value which represents an allowed list value.
@@ -99,7 +101,7 @@ class Sequence(Param):
                     return random.randint(0, 10)
         if "number" in self.kwargs:
             return Number.get_example_full(self)
-    
+
     def get_example(self):
         """
         Get an example set of values for this object, taking into account
@@ -171,7 +173,7 @@ class Sequence(Param):
                 "More than zero elements in this sequence."
             )
         return out
-    
+
     def get_example_full(self):
         """
         Get a single valid example value for this parameter.

@@ -1,12 +1,13 @@
 import sys
 
+
 class Loggable:
     """
     Convenience class to make an object automatically log errors. It only has
-    to implement get_error_name() (and only if the developer wants), which 
+    to implement get_error_name() (and only if the developer wants), which
     returns a string.
     """
-    
+
     def err_name(self):
         """
         Wrapper around get_error_name() which only calls it when a class

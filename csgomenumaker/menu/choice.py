@@ -8,7 +8,7 @@ class Choice(Menu):
     """
     Choose between different states for a specific option.
     """
-    
+
     def __init__(self, parent, options):
         Menu.__init__(self, parent, options)
         self.cls = "menu-choice"

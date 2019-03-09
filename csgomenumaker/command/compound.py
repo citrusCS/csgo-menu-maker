@@ -5,11 +5,11 @@ from .command import Command, \
 class Compound(Command):
     """
     A collection of multiple Commands.
-    
+
     Resolves to an alias command with multiple chained commands separated by
     statement separators in the Source console (by default, ';'). The chained
     commands are the commands located in the `children` attribute.
-    
+
     Used as an abstraction to make multiple commands run under one command's
     accord.
     """
@@ -18,7 +18,7 @@ class Compound(Command):
 
     def generate(self):
         output = ""
-        
+
         # Loop through children and add evaluate each one, but cut corners
         # along the way.
         for cmd in self.children:
@@ -29,9 +29,9 @@ class Compound(Command):
             # be optimized in this way.
             if cmd.clean and cmd.eval_state == COMMAND_EVAL_REGISTER:
                 gen = cmd.generate()
-                
+
                 # The max command length for commands is 1024 characters. We
-                # play it safe here (only 1000, in reality about 1014-1015 with 
+                # play it safe here (only 1000, in reality about 1014-1015 with
                 # overhead)
                 if len(gen) + len(output) < 1000:
                     output += cmd.generate()+";"

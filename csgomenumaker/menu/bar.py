@@ -8,34 +8,16 @@ class Bar(Menu):
     """
     Renders a nice-looking "slider"-style bar in the navigation window.
     """
-    
+
     def __init__(self, parent, options):
         Menu.__init__(self, parent, options)
         self.cls = "menu-bar"
-        self.min = 0            # minimum value
-        self.max = 0            # maximum value
-        self.steps = 0          # steps from min - max
-        self.var = ""           # var to change in the operation
-        self.style = "int"      # label style
-        self.default = self.max # default value to start at
-
-    # def setMin(self, min):
-        # self.min = min
-
-    # def setMax(self, max):
-        # self.max = max
-
-    # def setSteps(self, steps):
-        # self.steps = steps
-
-    # def setStyle(self, style):
-        # self.style = style
-
-    # def setVar(self, var):
-        # self.var = var
-
-    # def setDefault(self, default):
-        # self.default = default
+        self.min = 0             # minimum value
+        self.max = 0             # maximum value
+        self.steps = 0           # steps from min - max
+        self.var = ""            # var to change in the operation
+        self.style = "int"       # label style
+        self.default = self.max  # default value to start at
 
     def make_choices(self):
         """
@@ -48,7 +30,7 @@ class Bar(Menu):
         self.default = int(
             (step_amt * round(float(step_val)/step_amt) * (1/step_amt))
         )
-        
+
         # Generate each horz selection.
         for i in range(self.steps+1):
             # Add the selection and a command.
@@ -62,7 +44,7 @@ class Bar(Menu):
                 )
             )
             self.selections.append(horz_sel)
-            
+
             # Generate the text for each line of the navigation window.
             text_blocks = self.root.block_char * (int(fract*30)) + \
                 " "*(30-int(fract*30))
@@ -71,8 +53,8 @@ class Bar(Menu):
             text_bar_perc = ""
             text_bar_label = ""
             if self.style == "percent":
-                percVal = "%i%%" % int(val*100)
-                text_bar_perc = percVal.rjust(5)
+                perc_val = "%i%%" % int(val*100)
+                text_bar_perc = perc_val.rjust(5)
                 text_bar_label_min = str(int(self.min*100))
                 text_bar_label_max = str(int(self.max*100))
             elif self.style == "int":

@@ -9,7 +9,7 @@ class ChoiceVar(Menu):
     Similar to Choice, except functions as a shortcut, only allowing variable
     changes rather than an arbitrary command instance.
     """
-    
+
     def __init__(self, parent, options):
         Menu.__init__(self, parent, options)
         self.cls = "menu-choice-var"
@@ -29,7 +29,7 @@ class ChoiceVar(Menu):
         # No support for 0 choices.
         if len(self.choices) == 0:
             self.error("Not enough choices for convar/cmd '%s'" % self.var)
-        
+
         # Generate each command.navstate.Horz object.
         for i, ch in enumerate(self.choices):
             # Make the actual object, and make its convar command.Primitive as

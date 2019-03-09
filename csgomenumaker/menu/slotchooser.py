@@ -15,12 +15,6 @@ class SlotChooser(Menu):
         self.slots = 0
         self.verb = ""
 
-    # def setSlots(self, slots):
-        # self.slots = slots
-
-    # def setVerb(self, verb):
-        # self.verb = verb
-
     def make_choices(self):
         """
         Generate the command.navstate.Horz objects necessary for this menu to
@@ -31,7 +25,7 @@ class SlotChooser(Menu):
             horz_sel = command.navstate.Horz(self)
             horz_sel.actions["fire"].hook.children.append(self.get_command(i))
             self.selections.append(horz_sel)
-            
+
             # Format the UI text for the object.
             text_counter = "%s slot [%i/%i]" % (self.verb, i+1, self.slots)
             max_t_len = len(str(self.slots))

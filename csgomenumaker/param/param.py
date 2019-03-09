@@ -5,33 +5,31 @@ class Param(misc.Loggable):
     """
     Represents a single parameter key-value pair in the config.
     """
+
     def __init__(self, key, *args, **kwargs):
         # Setup - self.key is the key (duh!)
         self.key = key
         self.args = args
         self.kwargs = kwargs
-        
+
         # Children is a dict with keys being the keys of the value params.
         self.children = {}
-        
+
         # Mobility -
         self.root = None
         self.parent = None
-        
+
         # Set if root
         if "root" in self.kwargs:
             if self.kwargs["root"]:
                 self.setRoot(self)
-        
+
         # Value will be set later.
         self.value = None
-          
-    # def setRoot(self, root):
-        # self.root = root
-    
+
     def register(self, parent):
         """
-        Set the parent and root of each child param. Necessary because they 
+        Set the parent and root of each child param. Necessary because they
         have to have some kind of error 'hook' (path) in order to format error
         messages correctly.
         """
@@ -59,26 +57,26 @@ class Param(misc.Loggable):
     def check(self, value):
         """
         Validate the given value.
-        
+
         Overriden by child classes. Some kind of logic (bounds checking, etc.)
         will be applied here.
         """
         return value
-    
+
     def show_error(self, error):
         """
         Raise an error, but format it so that there is a bit of context given.
         """
         ostring = "%s\n\t... in:\n\t%s" % (error, self.options)
         self.error(ostring)
-    
+
     def type_error(self, want_type, have_type):
         """
         Raise a type error, meaning that want_type and have_type don't match.
         want_type may be a tuple or list.
         """
         self.type_error_v(want_type, have_type, "key '%s'" % self.key)
-    
+
     def type_error_v(self, want_type, have_type, v):
         """
         Same as above, but an extra parameter for how to format the key
@@ -96,7 +94,7 @@ class Param(misc.Loggable):
                 have_type.__name__
             )
         self.show_error(ostring)
-    
+
     def get_error_name(self):
         return (
             self.parent.get_error_name() +
@@ -105,28 +103,13 @@ class Param(misc.Loggable):
             "\x1b[0m"
         )
 
-    # def getKey(self):
-        # return self.key
-    
-    # def getValue(self):
-        # return self.value
-    
     def default_kwarg(self, arg, default):
         """
         Return the value `default` if `arg` was not passed in kwargs, else
         return kwargs[`arg`].
         """
         return default if arg not in self.kwargs else self.kwargs[arg]
-        
-    # def getKWArg(self, arg):
-        # return self.kwargs[arg]
-        
-    # def addChild(self, name, ch):
-        # self.children[name] = ch
-    
-    # def getChild(self, name):
-        # return self.children[name]
-    
+
     def merge(self, other):
         """
         Merge `other`'s params with `self`'s params. This employs a top-down
@@ -158,7 +141,7 @@ class Param(misc.Loggable):
         Generate an example listing(s) from this object only.
         """
         return []
-    
+
     def get_example_full(self):
         """
         Generate an example listing from this object and possibly its children.

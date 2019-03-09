@@ -11,7 +11,7 @@ from .settings import Settings
 class Loader(misc.Loggable):
     """
     The class that actually loads the damn config.
-    
+
     Holds the YAML instance with the config file, and holds the command.Root of
     the entire operation.
     """
@@ -32,17 +32,6 @@ class Loader(misc.Loggable):
         self.add_globals()
         self.add_globals_nav()
         self.make_all()
-
-    # def gen_settings(self):
-        # """
-        # Generate settings from Settings.
-        # """
-        # set = Settings(self.options)
-        # self.settings = set.getSettings()
-
-    # def add_classes(self):
-        # for cls in Component.ConfigTypeMapping.keys():
-            # self.root.addClass(cls, Component.ConfigTypeMapping[cls])
 
     def add_globals(self):
         """
@@ -129,9 +118,9 @@ class Loader(misc.Loggable):
                 # Bind the global to null. It will be rebound when the user
                 # presses enable.
                 self.root.globals[n] = \
-                        command.Null(
-                            self.root.globals[n+"_real"]
-                        )
+                    command.Null(
+                        self.root.globals[n+"_real"]
+                    )
             else:
                 # This is enable. Special case. Bind two states for the
                 # command, + and -. They each turn on/off developer mode.
@@ -141,9 +130,9 @@ class Loader(misc.Loggable):
                 minus_st = command.Compound(self.root)
                 minus_st.state_prefix = "-"
                 plus_st.state_prefix_other = minus_st
-                
+
                 # Then, make pressing enable bind/unbind the other six
-                # keybind'd keys. 
+                # keybind'd keys.
                 for i, m in enumerate(to_make):
                     if m == n:
                         continue
@@ -156,8 +145,12 @@ class Loader(misc.Loggable):
                             self.root.globals[m+"_real"]
                         ]
                     )
-                    command.Primitive(minus_st, "unbind", [self.keybinds[part]])
-                
+                    command.Primitive(
+                        minus_st,
+                        "unbind",
+                        [self.keybinds[part], ]
+                    )
+
                 # Place developer setup in an indirect in case source goes
                 # sicko mode on me.
                 indir = command.Indirect(plus_st)
@@ -178,46 +171,46 @@ class Loader(misc.Loggable):
         Add sound globals based off of their setting values.
         """
         snd_volume = self.settings["sounds"]["volume"]
-        
+
         self.root.globals["sound.updown"] = \
-        command.Primitive(
-            self.root,
-            "playvol",
-            [
-                self.settings["sounds"]["updown"],
-                str(snd_volume)
-            ]
-        )
-        
+            command.Primitive(
+                self.root,
+                "playvol",
+                [
+                    self.settings["sounds"]["updown"],
+                    str(snd_volume)
+                ]
+            )
+
         self.root.globals["sound.leftright"] = \
-        command.Primitive(
-            self.root,
-            "playvol",
-            [
-                self.settings["sounds"]["leftright"],
-                str(snd_volume)
-            ]
-        )
-        
+            command.Primitive(
+                self.root,
+                "playvol",
+                [
+                    self.settings["sounds"]["leftright"],
+                    str(snd_volume)
+                ]
+            )
+
         self.root.globals["sound.forward"] = \
-        command.Primitive(
-            self.root,
-            "playvol",
-            [
-                self.settings["sounds"]["forward"],
-                str(snd_volume)
-            ]
-        )
-        
+            command.Primitive(
+                self.root,
+                "playvol",
+                [
+                    self.settings["sounds"]["forward"],
+                    str(snd_volume)
+                ]
+            )
+
         self.root.globals["sound.backward"] = \
-        command.Primitive(
-            self.root,
-            "playvol",
-            [
-                self.settings["sounds"]["backward"],
-                str(snd_volume)
-            ]
-        )
+            command.Primitive(
+                self.root,
+                "playvol",
+                [
+                    self.settings["sounds"]["backward"],
+                    str(snd_volume)
+                ]
+            )
 
     def make_all(self):
         # The __main__ of this whole module. This is where the magic happens.
@@ -226,7 +219,7 @@ class Loader(misc.Loggable):
         self.menu_root = j
         j.join_children()
         j.make_realiases()
-        # Set the startup command to the entry of the first menu. 
+        # Set the startup command to the entry of the first menu.
         self.root.startup = j.selections[0].actions["entry"]
         # Make everything.
         self.root.make_all()
@@ -241,6 +234,6 @@ class Loader(misc.Loggable):
         )
         print("exec " + self.root.name_space + "/main.cfg")
         print("You may also test it by running the command in the console.")
-    
+
     def getErrorName(self):
         return "<top-level config>"

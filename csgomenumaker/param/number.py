@@ -4,9 +4,10 @@ from ..misc.math import *
 
 from .param import Param
 
+
 class Number(Param):
     """
-    A param type which accepts only a number. 
+    A param type which accepts only a number.
     This class also accepts a few other kwargs which modify its behavior:
     - choices
         Only allow integers in this list.
@@ -17,6 +18,7 @@ class Number(Param):
     - max
         Only allow values lower than this.
     """
+
     def check(self, value):
         """
         Check the given value against the restrictions imposed by this class
@@ -28,7 +30,9 @@ class Number(Param):
             choices = self.kwargs["choices"]
             if value not in choices:
                 orstr = " or ".join(["'%s'" % ch for ch in choices])
-                self.show_error(("Value not acceptable for key '%s'! " %
+                self.show_error(
+                    (
+                        "Value not acceptable for key '%s'! " %
                         (
                             self.key
                         )
@@ -39,7 +43,7 @@ class Number(Param):
                             orstr
                         )
                     )
-                )   
+                )
         if "int" in self.kwargs and self.kwargs["int"]:
             if not isinstance(value, int):
                 if not value.is_integer():
@@ -52,7 +56,8 @@ class Number(Param):
                     )
         if "min" in self.kwargs:
             if value < self.kwargs["min"]:
-                self.show_error("Value too low for key '%s' (%f < %f)!" %
+                self.show_error(
+                    "Value too low for key '%s' (%f < %f)!" %
                     (
                         self.key,
                         value,
@@ -61,7 +66,8 @@ class Number(Param):
                 )
         if "max" in self.kwargs:
             if value > self.kwargs["max"]:
-                self.show_error("Value too high for key '%s' (%f > %f)!" %
+                self.show_error(
+                    "Value too high for key '%s' (%f > %f)!" %
                     (
                         self.key,
                         value,
@@ -69,7 +75,7 @@ class Number(Param):
                     )
                 )
         return value
-    
+
     def get_example(self):
         """
         Get an example set of values for this object, taking into account
@@ -140,7 +146,7 @@ class Number(Param):
                     "Value is an integer."
                 )
             )
-    
+
     def get_example_full(self):
         """
         Get a single valid example value for this parameter.

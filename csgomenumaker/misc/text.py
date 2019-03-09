@@ -24,7 +24,7 @@ def text_center(text, width, padchar=" "):
 def text_extend(text, width, padchar=" "):
     """
     Pad string `text` to width `width` using char `padchar`.
-    
+
     Extend a string 'smartly', that is, don't extend, reduce, if it's already
     too long.
     """

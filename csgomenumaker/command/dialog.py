@@ -9,11 +9,11 @@ from .indirect import Indirect
 class Dialog(Compound):
     """
     Renders the contents of a UI dialog to the screen.
-    
-    This is accomplished through six echo commands, because that is the 
+
+    This is accomplished through six echo commands, because that is the
     maximum number of lines able to be shown in `developer 1` on the Source
     engine.
-    
+
     A dialog is 80 characters wide. The first line of a dialog is the path of
     the current option that the dialog references. The second, third, fourth
     and fifth lines are divided into two sectors. The first sector has a 25
@@ -21,10 +21,11 @@ class Dialog(Compound):
     has a 40 character wide space for the action that the dialog's parent
     employs. This can vary, and is discovered by the dialog upon generation.
     """
+
     def __init__(self, parent):
         Compound.__init__(self, parent)
         self.cls = "dialog"
-        
+
         # Dialogs are nested two-fold. To find the command.navstate.Horz object
         # that serves as the controller for what this displays, we must find
         # the second-degree parent.
@@ -34,17 +35,18 @@ class Dialog(Compound):
         """
         Find the neighbors that will be displayed in the first sector, which
         is the folder contents display.
-        
+
         self.neighbor0, neighbor1, neighbor2, and neighbor3 will be populated.
         Additionally, their texts will be computed or left blank depending on
         their sequence in the folder.
         """
+
         # Find neighbors.
         self.neighbor0 = self.horz_parent.neighbors["up"]
         self.neighbor1 = self.horz_parent.parent
         self.neighbor2 = self.horz_parent.neighbors["down"]
         self.neighbor3 = self.horz_parent.neighbors["down"].neighbors["down"]
-        
+
         # Determine if the neighbors' text should be left blank.
         if self.neighbor0.sequence >= self.neighbor1.sequence:
             self.neighbor0_text = ""
@@ -67,7 +69,7 @@ class Dialog(Compound):
         # backn is the up-directory of the dialog's parent.
         backn = self.horz_parent.neighbors["back"]
         text = backn.parent.get_path()
-        
+
         # Concatenate the header. join() for speed.
         header = "".join([
             self.root.box_drawing[0b0011],
@@ -156,7 +158,7 @@ class Dialog(Compound):
         on-screen.
         """
         self.get_neighbors()
-        
+
         # Generate help texts, which show which keys do which action.
         help0 = self.format_key("up") + " / " + self.format_key("down") \
             + " - Previous/Next"
@@ -164,7 +166,7 @@ class Dialog(Compound):
             + " - Change Setting"
         help2 = self.format_key("fire") + " - Enter Folder / Run Command"
         help3 = self.format_key("back") + " - Exit Folder"
-        
+
         # Generate the individual lines which are shown on-screen.
         line0 = self.format_header()
         line1 = self.format_contents_0() + " " + help0
@@ -172,13 +174,13 @@ class Dialog(Compound):
         line3 = self.format_contents_2() + " " + help2
         line4 = self.format_contents_3() + " " + help3
         line5 = self.format_footer()
-        
+
         # The commands are nested in an Indirect, because of a fucking stupid
         # parsing bug in the Source engine. Valve, please fix. Actually do,
         # though, because this bug goes all the way back to FUCKING QUAKE with
         # the concmd system. SERIOUSLY!!!
         # A description of the bug is as follows.
-        
+
         # The Source engine is derived from the GoldSrc engine. The GoldSrc
         # engine is derived from Quake (1996), albeit with heavy modification.
         # Thus, there is some residual code from Quake in the Source engine.
@@ -223,14 +225,14 @@ class Dialog(Compound):
         # commands normally, i.e. from the console or from a .cfg. What gives??
         # I would trace it further, but I decided it wasn't worth it after 3+
         # hours of searching, especially as I would have no way of fixing it.
-        
+
         # Anyway, the outcome of this is that each set of echo commands must be
         # put inside a separate .cfg file. Pretty gnarly. However, it was fun
         # to poke around the Source codebase. Regardless of how weird its
         # organization is, the engine is remarkable and is one of the easiest
         # engines to understand, as well as the company being relatively
         # developer friendly. Thanks Valve!
-        
+
         indir = Indirect(self)
         Echo(indir, line0)
         Echo(indir, line1)

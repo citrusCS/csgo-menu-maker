@@ -12,6 +12,7 @@ name_space(
     description="Demo recording, playback, and control."
 )
 
+
 @Component("record")
 class Record(menu.SlotChooser):
     params = ParamObj(
@@ -25,7 +26,7 @@ class Record(menu.SlotChooser):
             description="The number of slots to be made."
         )
     )
-    
+
     def __init__(self, parent, options):
         menu.SlotChooser.__init__(self, parent, options)
         self.verb = "Record to"
@@ -40,6 +41,7 @@ class Record(menu.SlotChooser):
         )
         return cmd
 
+
 @Component("play")
 class Play(menu.SlotChooser):
     params = ParamObj(
@@ -53,7 +55,7 @@ class Play(menu.SlotChooser):
             description="The number of slots to be made."
         )
     )
-    
+
     def __init__(self, parent, options):
         menu.SlotChooser.__init__(self, parent, options)
         self.verb = "Play from"
@@ -68,6 +70,7 @@ class Play(menu.SlotChooser):
         )
         return cmd
 
+
 @Component("stop")
 class Stop(generic.FireableCmd):
     params = ParamObj(
@@ -76,15 +79,16 @@ class Stop(generic.FireableCmd):
         Override("concmd", "stopdemo")
     )
 
+
 @Component("ui")
 class UI(generic.FireableCmd):
     params = ParamObj(
         Name("UI"),
         Desc("Open the demo UI."),
         Override("concmd", "demoui")
-    )  
+    )
+
 
 # 2019/03/03: FINALLY DONE! This is the last file I wrote!
 
 name_space()
-    
