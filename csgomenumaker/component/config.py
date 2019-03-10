@@ -225,7 +225,7 @@ class Crosshair(generic.PresetChooser):
                     "color_preset",
                     default=5,
                     description=(
-                        "When 'style' is 0 or 1, this controls the "
+                        "When `style` is 0 or 1, this controls the "
                         "crosshair's color."
                     ),
                     convar="cl_crosshaircolor"
@@ -237,25 +237,25 @@ class Crosshair(generic.PresetChooser):
 
     def get_commands(self, xhair):
         commands = [
+            self.make_param_cmd(xhair, "alpha"),
+            self.make_param_cmd(xhair, "color_preset"),
+            self.make_param_cmd(xhair, "dot"),
             self.make_param_cmd(xhair, "drawoutline"),
             self.make_param_cmd(xhair, "dynamic_maxdist_splitratio"),
             self.make_param_cmd(xhair, "dynamic_splitalpha_innermod"),
             self.make_param_cmd(xhair, "dynamic_splitalpha_outermod"),
             self.make_param_cmd(xhair, "dynamic_splitdist"),
-            self.make_param_cmd(xhair, "outline_thickness"),
-            self.make_param_cmd(xhair, "sniper_show_normal_inaccuracy"),
-            self.make_param_cmd(xhair, "sniper_width"),
-            self.make_param_cmd(xhair, "t_shape"),
-            self.make_param_cmd(xhair, "alpha"),
-            self.make_param_cmd(xhair, "dot"),
+            self.make_param_cmd(xhair, "fixed_gap"),
             self.make_param_cmd(xhair, "gap"),
             self.make_param_cmd(xhair, "gap_useweaponvalue"),
-            self.make_param_cmd(xhair, "fixed_gap"),
+            self.make_param_cmd(xhair, "outline_thickness"),
             self.make_param_cmd(xhair, "size"),
+            self.make_param_cmd(xhair, "sniper_show_normal_inaccuracy"),
+            self.make_param_cmd(xhair, "sniper_width"),
+            self.make_param_cmd(xhair, "style"),
+            self.make_param_cmd(xhair, "t_shape"),
             self.make_param_cmd(xhair, "thickness"),
-            self.make_param_cmd(xhair, "usealpha"),
-            self.make_param_cmd(xhair, "color_preset"),
-            self.make_param_cmd(xhair, "style")
+            self.make_param_cmd(xhair, "usealpha")
         ]
         commands.extend(self.make_param_cmd(xhair, "color"))
         return commands

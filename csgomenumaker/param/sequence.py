@@ -65,6 +65,7 @@ class Sequence(Param):
             for i, v in enumerate(value):
                 self.key = "element '%i' of key '%s'" % (i, temp_key)
                 value[i] = Number.check(self, value[i])
+            self.key = temp_key
         zerook = self.default_kwarg("zerook", False)
         if not zerook:
             if not len(value):

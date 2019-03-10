@@ -15,6 +15,7 @@ class Loader(misc.Loggable):
     Holds the YAML instance with the config file, and holds the command.Root of
     the entire operation.
     """
+
     def __init__(self, infile, file=True, example=False):
         if file:
             self.options = yaml.load(open(infile, "r"))

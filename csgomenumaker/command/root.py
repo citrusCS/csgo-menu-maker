@@ -87,7 +87,14 @@ class Root(Command):
                 # Generate state prefixes a la (+forward, -forward)
                 if c.state_prefix == "+":
                     other = c.state_prefix_other
+                    other.state_prefix = "-"
                     other.is_obf = True
+                    # Format like: "mm_XXXXXXXX"
+                    nname = "%s%s_%0.8X" % (
+                        other.state_prefix,
+                        self.name_prefix,
+                        c.id
+                    )
                     other.obf_name = nname
                 # Format like: "mm_XXXXXXXX"
                 nname = "%s%s_%0.8X" % (c.state_prefix, self.name_prefix, c.id)
