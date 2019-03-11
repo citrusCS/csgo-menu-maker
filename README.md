@@ -1,9 +1,9 @@
 csgo-menu-maker
 ===============
 
-[](https://img.shields.io/pypi/pyversions/csgo-menu-maker.svg)
+![](https://img.shields.io/pypi/pyversions/csgo-menu-maker.svg)
 
-[](https://raw.githubusercontent.com/wiki/citrusCS/csgo-menu-maker/assets/readme/demo.png)
+![](https://raw.githubusercontent.com/wiki/citrusCS/csgo-menu-maker/assets/readme/demo.png)
 
 ## Coming here from somewhere that isn't GitHub? Check out the [Quick-Start Guide!](https://git.io/fhj0L)
 
