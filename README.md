@@ -13,7 +13,7 @@ The Source(TM) engine has a console command system that is extremely powerful wh
 
 `csgo-menu-maker` uses a versatile configuration language (spoiler alert: it's yml) which lets users with very little to no coding experience create these menus.
 
-Over the past month of writing this, I learned a lot about Python, [source console scripting,](https://developer.valvesoftware.com/wiki/Developer_Console),\ and [tracking down bugs that are older than I am.](https://git.io/fhj0O) In the process of discovering my own and Valve's bugs, I may have left a few in this project, so don't be too hard on me.
+Over the past month of writing this, I learned a lot about Python, [source console scripting,](https://developer.valvesoftware.com/wiki/Developer_Console) and [tracking down bugs that are older than I am.](https://git.io/fhj0O) In the process of discovering my own and Valve's bugs, I may have left a few in this project, so don't be too hard on me.
 
 ## Usage
 
