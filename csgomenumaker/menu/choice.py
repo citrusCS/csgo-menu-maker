@@ -14,11 +14,11 @@ class Choice(Menu):
         self.cls = "menu-choice"
         self.choices = []
 
-    def add_choice(self, choicename, action):
+    def add_choice(self, choicename, action, fire=None):
         """
         Add a (name, command action) object to the choice list.
         """
-        self.choices.append((choicename, action))
+        self.choices.append((choicename, action, fire))
 
     def make_choices(self):
         """
@@ -28,6 +28,8 @@ class Choice(Menu):
         for i, ch in enumerate(self.choices):
             horz_sel = command.navstate.Horz(self)
             horz_sel.actions["entry"].hook.children.append(ch[1])
+            if ch[2] != None:
+                horz_sel.actions["fire"].hook.children.append(ch[2])
             self.selections.append(horz_sel)
             # Format is [val/max] // > selected <
             text_counter = "[%i/%i]" % (i+1, len(self.choices))

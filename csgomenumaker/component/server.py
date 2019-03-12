@@ -1,3 +1,5 @@
+from .. import command
+from .. import menu
 from ..param import *
 
 from .component import *
@@ -185,5 +187,24 @@ class OutOfAmmoIndicator(generic.ChoiceVarBinary):
         Override("convar", "sv_outofammo_indicator")
     )
 
+@Component("changemap", "change_map")
+class ChangeMap(menu.Choice):
+    params = ParamObj(
+        Name("Change Maps"),
+        Desc("Change the currently played map."),
+        Sequence(
+            "maps",
+            seqtypes=(str,),
+            description="The maps to be used."
+        ),
+    )
+
+    def __init__(self, parent, options):
+        menu.Choice.__init__(self, parent, options)
+        for ch in self.params["maps"]:
+            comp = self.root.globals["void"]
+            mapcmd = command.Primitive(self, "map", ch)
+            self.add_choice(ch, comp, mapcmd)
+        self.make_choices()
 
 name_space()

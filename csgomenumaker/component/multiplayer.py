@@ -268,6 +268,19 @@ class EndWarmup(generic.FireableCmd):
         Override("concmd", "mp_warmup_end")
     )
 
+@Component("freezetime")
+class FreezeTime(generic.Bar):
+     params = ParamObj(
+        Name("Freeze Time"),
+        Desc("Change the amount of time players are frozen at the start."),
+        Override("min", 0),
+        Override("max", 20),
+        Override("steps", 20),
+        Override("convar", "mp_freezetime"),
+        Override("style", "int"),
+        Override("default", 5)
+    )   
+
 
 name_space()
 
