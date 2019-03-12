@@ -175,10 +175,10 @@ class Dialog(Compound):
         line4 = self.format_contents_3() + " " + help3
         line5 = self.format_footer()
 
-        # The commands are nested in an Indirect, because of a fucking stupid
+        # The commands are nested in an Indirect, because of a really stupid
         # parsing bug in the Source engine. Valve, please fix. Actually do,
-        # though, because this bug goes all the way back to FUCKING QUAKE with
-        # the concmd system. SERIOUSLY!!!
+        # though, because this bug goes all the way back to id software's QUAKE
+        # with the concmd system. SERIOUSLY!!!
         # A description of the bug is as follows.
 
         # The Source engine is derived from the GoldSrc engine. The GoldSrc
