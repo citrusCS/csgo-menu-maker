@@ -1,0 +1,4 @@
+- Citrus (github:@CitrusCS)
+    - Original creator
+- takeshixx (github:@takeshixx)
+    - Fixed a pretty bad security hole that could have allowed config files to run arbitrary commands
