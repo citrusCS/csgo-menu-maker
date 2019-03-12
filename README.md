@@ -65,4 +65,5 @@ python -m csgomenumaker
 ```
 
 Have fun!
+
 -- Citrus
