@@ -18,9 +18,9 @@ class Loader(misc.Loggable):
 
     def __init__(self, infile, file=True, example=False):
         if file:
-            self.options = yaml.load(open(infile, "r"))
+            self.options = yaml.safe_load(open(infile, "r"))
         else:
-            self.options = yaml.load(infile)
+            self.options = yaml.safe_load(infile)
         self.example = example
         self.root = command.Root()
         self.root.config = self
