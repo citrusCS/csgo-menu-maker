@@ -88,7 +88,7 @@ class Number(Param):
             if len(choices) > 1:
                 out.append((choices[1], True, "In list of allowed choices."))
         if "max" in self.kwargs:
-            min = max-10 if "min" not in self.kwargs else self.kwargs["min"]
+            min = self.kwargs.get("min", max-10)
             max = self.kwargs["max"]
             vno = max+10
             rnd = 2 if "int" not in self.kwargs else 2 if not \
