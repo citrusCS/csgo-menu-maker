@@ -97,7 +97,7 @@ class DocGen(misc.Loggable):
         parts = path.parts
         out_path = list(parts)
         p = out_path[0]
-        while p is not "csgomenumaker":
+        while p != "csgomenumaker":
             out_path.pop(0)
             p = out_path[0]
 
