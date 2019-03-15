@@ -2,3 +2,5 @@
     - Original creator
 - takeshixx (github:@takeshixx)
     - Fixed a pretty bad security hole that could have allowed config files to run arbitrary commands
+- cclauss (github:@cclauss)
+    - Fixed style issues in docgen.py
