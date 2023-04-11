@@ -13,6 +13,8 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/citrusCS/csgo-menu-maker",
     packages=setuptools.find_packages(),
+    entry_points={'console_scripts': ['csgo-menu-maker=csgomenumaker:__main__']},
+    install_requires=['pyyaml'],
     classifiers=[
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
